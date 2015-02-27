@@ -5,5 +5,5 @@ version of qlasso from Github:
 
 ```r
 require(devtools)
-install_github("kokrah/shape")
+install_github("kokrah/qlasso")
 ```
