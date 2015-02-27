@@ -1,14 +1,10 @@
-# Compute sample quantiles, the quantile reference, and alpha matrix.
-
-# Notes:
-# 1. 
-
-# Input:
-# data (positive values: raw intensities or pseudo-counts)
-
-# Output:
-# A list: (1.) log2(sample quantiles) (2.) log2(quantile ref.) (3.) alphas
-
+#' Compute sample quantiles, the quantile reference, and alpha matrix.
+#' Notes:
+#' 1. 
+#' Output:
+#' A list: (1.) log2(sample quantiles) (2.) log2(quantile ref.) (3.) alphas
+#' @param data (positive values: raw intensities or pseudo-counts)
+#' @export 
 scals <- function (data) {
   
   # Compute sample quantiles

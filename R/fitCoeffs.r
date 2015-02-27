@@ -1,20 +1,17 @@
-# Fit group coefficients
-
-# Notes:
-# 1. Currently using ridge regression
-
-# Input:
-# y = matrix of median adjusted quantiles (genes by samples)
-# groups = groups factor / character
-# lambda = shrinkage parameter
-# levels = (optional) specify order of levels
-
-# Output:
-# returns a list: (1.) a matrix of fitted group means for each gene (2.) design matrix
-
-fitCoeffs = function (y, groups, lambda, levels=NULL) {
+#' Fit alpha group coefficients
+#' Notes:
+#' 1. Currently using ridge regression
+#' Output:
+#' returns a list: (1.) a matrix of fitted group means for each gene (2.) design matrix
+#'
+#' @param alpha matrix of reference adjusted quantiles (genes by samples)
+#' @param groups groups factor / character
+#' @param lambda shrinkage parameter
+#' @param levels (optional) specify order of levels
+#' @export
+fitCoeffs = function (alpha, groups, lambda, levels=NULL) {
   
-  Y = as.matrix(y)
+  Y = as.matrix(alpha)
   
   if (length(groups)==1) {
     
