@@ -1,0 +1,112 @@
+%\VignetteIndexEntry{The qlasso user's guide}
+%\VignettePackage{qlasso}
+%\VignetteEngine{knitr::knitr}
+\documentclass{article}
+
+<<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
+    BiocStyle::latex()
+@
+
+\setlength{\parskip}{1\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{The \texttt{qlasso} user's guide}
+\author{Kwame Okrah \texttt{kwame.okrah@gmail.com} \and
+Hector Corrado Bravo \texttt{hcorrada@gmail.com} \and
+Stephanie C. Hicks \texttt{shicks@jimmy.harvard.edu} \and
+Rafael A. Irizarry \texttt{rafa@jimmy.harvard.edu} }
+
+\date{Modified: March 5, 2015.  Compiled: \today}
+
+
+\begin{document}
+
+\maketitle
+ 
+\tableofcontents
+
+\section{Introduction}
+
+Add introduction here. 
+
+\section{Getting Started}
+
+Load the \texttt{qlasso} package in R. 
+
+<<lib-load, message=FALSE>>=
+library(qlasso)
+@
+
+
+\section{Data}
+
+\subsection{flowSorted Data Example}
+Load an example data set. Here we use the flowSorted data set in quantro. 
+(but we can change this to whatever). 
+
+<<lib-data, message=FALSE>>=
+library(quantro)
+library(minfi)
+@
+
+
+<<load-data>>=
+data(flowSorted)
+p <- getBeta(flowSorted, offset = 100)
+pd <- pData(flowSorted)
+@
+
+
+\section{Using \texttt{qlasso} for normalization}
+
+
+\subsection{Computing quantiles}
+
+The sample quantiles of the raw data can be computed using the 
+\texttt{scals()} function. The \texttt{scals()} function also computes the 
+distribution of all the samples averaged across the quantiles. We call this 
+the quantile reference. 
+
+\[ \bar{Q}_{..}(u) = \frac{1}{n_T} \sum_{n_T}^{i=1} Q_{ik}(u) \]
+
+<<compute-quantiles>>=
+alpha = p - rowMeans(apply(p, 2, sort))
+# what about median normalization?
+# what about geometric mean? 
+# alpha = scals(p)$alpha
+@
+
+
+\subsection{Using the \texttt{qlasso()} function}
+
+
+Compute F-statistics for each quantile. 
+<<compute-Fstats>>=
+# I think we should create a qlasso() function that wraps up fstat + fitCoeffs
+fVals = fStat(alpha = alpha, groupFactor = pd$CellType)
+@
+
+Use qlasso to fit a linear model at each quantile.
+<<fit-coeffs>>=
+qlassoFit = fitCoeffs(alpha = alpha, groupFactor = pd$CellType,
+                      lambda = 1 / fVals$fstat)
+head(qlassoFit$betas)
+@
+
+\subsection{Obtaining \texttt{qlasso} normalized values}
+
+The normalized values are computed using
+
+
+
+
+
+
+\section{SessionInfo}
+
+<<sessionInfo,results ='markup'>>=
+sessionInfo()
+@
+
+
+\end{document}

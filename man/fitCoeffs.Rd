@@ -8,12 +8,12 @@ Notes:
 Output:
 returns a list: (1.) a matrix of fitted group means for each gene (2.) design matrix}
 \usage{
-fitCoeffs(alpha, groups, lambda, levels = NULL)
+fitCoeffs(alpha, groupFactor, lambda, levels = NULL)
 }
 \arguments{
 \item{alpha}{matrix of reference adjusted quantiles (genes by samples)}
 
-\item{groups}{groups factor / character}
+\item{groupFactor}{groups factor / character}
 
 \item{lambda}{shrinkage parameter}
 

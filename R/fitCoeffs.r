@@ -5,15 +5,15 @@
 #' returns a list: (1.) a matrix of fitted group means for each gene (2.) design matrix
 #'
 #' @param alpha matrix of reference adjusted quantiles (genes by samples)
-#' @param groups groups factor / character
+#' @param groupFactor groups factor / character
 #' @param lambda shrinkage parameter
 #' @param levels (optional) specify order of levels
 #' @export
-fitCoeffs = function (alpha, groups, lambda, levels=NULL) {
+fitCoeffs = function (alpha, groupFactor, lambda, levels=NULL) {
   
   Y = as.matrix(alpha)
   
-  if (length(groups)==1) {
+  if (length(groupFactor)==1) {
     
     X = matrix(1, ncol(Y))
     colnames(X) = "Average"
@@ -23,11 +23,11 @@ fitCoeffs = function (alpha, groups, lambda, levels=NULL) {
     
     if (is.null(levels)) {
       
-      groupFactor = factor(groups)  
+      groupFactor = factor(groupFactor)  
       
     }else{
       
-      groupFactor = factor(groups, levels=levels)
+      groupFactor = factor(groupFactor, levels=levels)
       
     }
     

@@ -12,7 +12,7 @@ scals <- function (data) {
   log2.Q <- log2(Q)
   
   # Compute quantile reference
-  log2.Qref <- rowMeans(log2.Q)
+  log2.Qref <- exp(rowMeans(log2.Q))
   
   # Compute alpha matrix
   alpha <- log2.Q - log2.Qref 

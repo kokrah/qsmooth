@@ -7,12 +7,12 @@ Notes:
 Output:
 A list: (1.) fstat (2.) df1 (3.) df2}
 \usage{
-fStat(alpha, groups, levels = NULL)
+fStat(alpha, groupFactor, levels = NULL)
 }
 \arguments{
 \item{alpha}{matrix of median adjusted quantiles (genes by samples)}
 
-\item{groups}{groups factor / character}
+\item{groupFactor}{groups factor / character}
 
 \item{levels}{(optional) specify order of levels}
 }

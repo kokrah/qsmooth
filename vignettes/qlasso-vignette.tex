@@ -1,0 +1,234 @@
+%\VignetteIndexEntry{The qlasso user's guide}
+%\VignettePackage{qlasso}
+%\VignetteEngine{knitr::knitr}
+\documentclass{article}\usepackage[]{graphicx}\usepackage[usenames,dvipsnames]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+\RequirePackage{/Library/Frameworks/R.framework/Versions/3.1/Resources/library/BiocStyle/resources/latex/Bioconductor}
+
+\AtBeginDocument{\bibliographystyle{/Library/Frameworks/R.framework/Versions/3.1/Resources/library/BiocStyle/resources/latex/unsrturl}}
+
+
+\setlength{\parskip}{1\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{The \texttt{qlasso} user's guide}
+\author{Kwame Okrah \texttt{kwame.okrah@gmail.com} \and
+Hector Corrado Bravo \texttt{hcorrada@gmail.com} \and
+Stephanie C. Hicks \texttt{shicks@jimmy.harvard.edu} \and
+Rafael A. Irizarry \texttt{rafa@jimmy.harvard.edu} }
+
+\date{Modified: March 5, 2015.  Compiled: \today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+ 
+\tableofcontents
+
+\section{Introduction}
+
+Add introduction here. 
+
+\section{Getting Started}
+
+Load the \texttt{qlasso} package in R. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(qlasso)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\section{Data}
+
+\subsection{flowSorted Data Example}
+Load an example data set. Here we use the flowSorted data set in quantro. 
+(but we can change this to whatever). 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(quantro)}
+\hlkwd{library}\hlstd{(minfi)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{data}\hlstd{(flowSorted)}
+\hlstd{p} \hlkwb{<-} \hlkwd{getBeta}\hlstd{(flowSorted,} \hlkwc{offset} \hlstd{=} \hlnum{100}\hlstd{)}
+\hlstd{pd} \hlkwb{<-} \hlkwd{pData}\hlstd{(flowSorted)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\section{Using \texttt{qlasso} for normalization}
+
+
+\subsection{Computing quantiles}
+
+The sample quantiles of the raw data can be computed using the 
+\texttt{scals()} function. The \texttt{scals()} function also computes the 
+distribution of all the samples averaged across the quantiles. We call this 
+the quantile reference. 
+
+\[ \bar{Q}_{..}(u) = \frac{1}{n_T} \sum_{n_T}^{i=1} Q_{ik}(u) \]
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{alpha} \hlkwb{=} \hlstd{p} \hlopt{-} \hlkwd{rowMeans}\hlstd{(}\hlkwd{apply}\hlstd{(p,} \hlnum{2}\hlstd{, sort))}
+\hlcom{# what about median normalization?}
+\hlcom{# what about geometric mean? }
+\hlcom{# alpha = scals(p)$alpha}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{Using the \texttt{qlasso()} function}
+
+
+Compute F-statistics for each quantile. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# I think we should create a qlasso() function that wraps up fstat + fitCoeffs}
+\hlstd{fVals} \hlkwb{=} \hlkwd{fStat}\hlstd{(}\hlkwc{alpha} \hlstd{= alpha,} \hlkwc{groupFactor} \hlstd{= pd}\hlopt{$}\hlstd{CellType)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Use qlasso to fit a linear model at each quantile.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{qlassoFit} \hlkwb{=} \hlkwd{fitCoeffs}\hlstd{(}\hlkwc{alpha} \hlstd{= alpha,} \hlkwc{groupFactor} \hlstd{= pd}\hlopt{$}\hlstd{CellType,}
+                      \hlkwc{lambda} \hlstd{=} \hlnum{1} \hlopt{/} \hlstd{fVals}\hlopt{$}\hlstd{fstat)}
+\hlkwd{head}\hlstd{(qlassoFit}\hlopt{$}\hlstd{betas)}
+\end{alltt}
+\begin{verbatim}
+##               NeuN_neg    NeuN_pos
+## cg11805814 0.745649323 0.790179226
+## cg27272293 0.745646130 0.724215860
+## cg21785710 0.753945438 0.772728239
+## cg27189973 0.150035005 0.279568646
+## cg06532611 0.621730859 0.852632472
+## cg18838207 0.006808749 0.006578851
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Obtaining \texttt{qlasso} normalized values}
+
+The normalized values are computed using
+
+
+
+
+
+
+\section{SessionInfo}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{sessionInfo}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## R version 3.1.2 (2014-10-31)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats4    parallel  stats     graphics  grDevices datasets  utils     methods  
+## [9] base     
+## 
+## other attached packages:
+##  [1] minfi_1.12.0         bumphunter_1.6.0     locfit_1.5-9.1       iterators_1.0.7     
+##  [5] foreach_1.4.2        Biostrings_2.34.1    XVector_0.6.0        GenomicRanges_1.18.4
+##  [9] GenomeInfoDb_1.2.4   IRanges_2.0.1        S4Vectors_0.4.0      lattice_0.20-30     
+## [13] Biobase_2.26.0       BiocGenerics_0.12.1  quantro_1.0.0        qlasso_0.0.0.9000   
+## [17] knitr_1.9           
+## 
+## loaded via a namespace (and not attached):
+##  [1] annotate_1.44.0       AnnotationDbi_1.28.1  base64_1.1           
+##  [4] beanplot_1.2          BiocStyle_1.4.1       codetools_0.2-10     
+##  [7] colorspace_1.2-4      DBI_0.3.1             digest_0.6.8         
+## [10] doParallel_1.0.8      doRNG_1.6             evaluate_0.5.5       
+## [13] formatR_1.0           genefilter_1.48.1     ggplot2_1.0.0        
+## [16] grid_3.1.2            gtable_0.1.2          highr_0.4            
+## [19] illuminaio_0.8.0      limma_3.22.6          MASS_7.3-39          
+## [22] matrixStats_0.14.0    mclust_4.4            multtest_2.22.0      
+## [25] munsell_0.4.2         nlme_3.1-120          nor1mix_1.2-0        
+## [28] pkgmaker_0.22         plyr_1.8.1            preprocessCore_1.28.0
+## [31] proto_0.3-10          quadprog_1.5-5        RColorBrewer_1.1-2   
+## [34] Rcpp_0.11.4           registry_0.2          reshape_0.8.5        
+## [37] reshape2_1.4.1        rngtools_1.2.4        RSQLite_1.0.0        
+## [40] scales_0.2.4          siggenes_1.40.0       splines_3.1.2        
+## [43] stringr_0.6.2         survival_2.38-1       tools_3.1.2          
+## [46] XML_3.98-1.1          xtable_1.7-4          zlibbioc_1.12.0
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\end{document}
