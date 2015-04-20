@@ -129,7 +129,6 @@ Use qauntro for the same test.
 @
 
 Conclusions are the same as shapeManova. 
-(comment: should I implement a permutation based shape manova? later...)
 
 \section{Using \texttt{qlasso} for normalization}
 
