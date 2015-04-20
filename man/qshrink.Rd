@@ -5,7 +5,7 @@
 \title{Quantile shrinkage normalization}
 \usage{
 qshrink(exprs, groups, refType = "mean", groupLoc = "mean", window = 99,
-  verbose = FALSE, groupCol = NULL)
+  verbose = FALSE, groupCol = NULL, plot = FALSE)
 }
 \arguments{
 \item{exprs}{for counts use log2(raw counts + 1)), for MA use log2(raw intensities)}
@@ -21,6 +21,8 @@ qshrink(exprs, groups, refType = "mean", groupLoc = "mean", window = 99,
 \item{verbose}{show info}
 
 \item{groupCol}{character vector indicating the group color for each sample}
+
+\item{plot}{plot weights? (default=FALSE)}
 }
 \description{
 Quantile shrinkage normalization

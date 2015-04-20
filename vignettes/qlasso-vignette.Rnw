@@ -114,12 +114,7 @@ variance based on the shape (L-skew, L-kurt) esitmates
 # compute l-ratios
 par(mgp=c(1.5, 0.5, 0), mar=c(4.5, 2.5, 1, 0.5))
 
-lrats = fitShape(t(log2(counts+1)))$lrats
-(pval <- round(shapeManova(lrats, groups)$pval, 3))
-          
-plot(lrats, col=groupCol, pch=19, ylab="L-kurt", xlab="L-skew",
-     main="Pickrell (Summary of raw log2(counts+1) values)",
-     sub=paste0("Wilk's Manova Test: pval=", pval))
+(pval <- shapeManova(log2(counts+1), groups))
 @
 
 The pvalue of 0.151 indicates that sex and transcriptome shape are not

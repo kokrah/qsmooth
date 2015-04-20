@@ -7,9 +7,10 @@
 #' @param window window size for running median
 #' @param verbose show info
 #' @param groupCol character vector indicating the group color for each sample  
+#' @param plot plot weights? (default=FALSE)
 #' @export 
 qshrink = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
-                               verbose=FALSE, groupCol=NULL) {
+                               verbose=FALSE, groupCol=NULL, plot=FALSE) {
   # 1. Compute quantile stats
   res = qstats(exprs, groups, refType=refType, groupLoc=groupLoc, window=window)
   
@@ -42,14 +43,21 @@ qshrink = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
     
   rownames(normExprs) = rownames(exprs)
   colnames(normExprs) = colnames(exprs)
-   
+  
+  # 5. Plot weights
+  if (plot) {
+    
+    oldpar = par(mar=c(4, 4, 1.5, 0.5))
+    
+    u = (1:length(Qref) - 0.5) / length(Qref)
+    plot(u, w, pch=".", main="Quantile reference weights",
+         xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+    
+    abline(h=0.5, v=0.5, col="red", lty=2)
+    
+    par(oldpar)
+  
+  }
+  
   normExprs
 }
-
-
-# matplot(Qref, Qref - QBETAS, col="gray", pch=".", ylim=c(-0.5, 0.5))
-# matplot(Qref, Qref - (wQBETAS + wQref), pch=".", col=unique(groupCol), add=TRUE)
-# points(Qref, w-.5, pch=".")
-# boxplot(Qref, horizontal = TRUE, add=TRUE, at=-.4)
-# abline(h=0)
-# 
