@@ -49,10 +49,23 @@ qshrink = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
     
     oldpar = par(mar=c(4, 4, 1.5, 0.5))
     
-    u = (1:length(Qref) - 0.5) / length(Qref)
-    plot(u, w, pch=".", main="Quantile reference weights",
-         xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+    lq = length(Qref)
+    u = (1:lq - 0.5) / lq
     
+    if (length(u) > 10000) { # do not plot more than 10000 points
+      
+      sel = sample(1:lq, 10000)
+        
+      plot(u[sel], w[sel], pch=".", main="Quantile reference weights",
+           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+      
+    }else{
+      
+      plot(u, w, pch=".", main="Quantile reference weights",
+           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+      
+    }
+
     abline(h=0.5, v=0.5, col="red", lty=2)
     
     par(oldpar)

@@ -160,7 +160,7 @@ number of samples (see the \texttt{minSamples} parameter).
 \end{kframe}
 \end{knitrout}
 
-Density plots
+Density plots.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
@@ -234,7 +234,7 @@ Use qauntro for the same test.
 ##    nSamplesinGroups:  40 29 
 ##    anovaPval:  0.50626 
 ##    quantroStat:  2.01579 
-##    quantroPvalPerm:  0.134
+##    quantroPvalPerm:  0.11
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -302,13 +302,17 @@ We do not need to call \texttt{qstats}. It was shown
 above for demonstration.
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{normExprs} \hlkwb{=} \hlkwd{qshrink}\hlstd{(}\hlkwc{exprs}\hlstd{=}\hlkwd{log2}\hlstd{(scaled.counts),} \hlkwc{groups}\hlstd{=groups,}
-                    \hlkwc{refType}\hlstd{=}\hlstr{"mean"}\hlstd{,} \hlkwc{groupLoc}\hlstd{=}\hlstr{"mean"}\hlstd{,} \hlkwc{window}\hlstd{=}\hlnum{99}\hlstd{)}
-\end{alltt}
-\end{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/qshrikage-1} 
+
+}
+
+
+
 \end{knitrout}
+The weights in this plot are the same as the weights above. 
+(final vignette will not include above plot.)
 
 Boxplots
 \begin{knitrout}

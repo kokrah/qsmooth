@@ -19,7 +19,7 @@ simulateCounts = function(mu, groupSize, disp=0.3, groupFC=NULL, techShapeBias=N
     
   }else{
     
-    if ( ! all(dim(groupFC) == dim(groupMu)) ) stop("K.Okrah: Check groupFC size.")
+    if (!all(dim(groupFC) == dim(groupMu))) stop("K.Okrah: Check groupFC size.")
     
   }
   
@@ -95,5 +95,5 @@ simulateCounts = function(mu, groupSize, disp=0.3, groupFC=NULL, techShapeBias=N
   
   rownames(counts) = paste0("gene.", 1:nrow(groupMu))
   
-  list(counts=counts, groups=groups)
+  list(counts=counts, groups=groups, groupMu=groupMu)
 }
