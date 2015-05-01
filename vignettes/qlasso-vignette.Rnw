@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{The qlasso user's guide}
+%\VignetteIndexEntry{The qsmooth user's guide}
 %\VignettePackage{qlasso}
 %\VignetteEngine{knitr::knitr}
 \documentclass{article}
@@ -10,7 +10,7 @@
 \setlength{\parskip}{1\baselineskip}
 \setlength{\parindent}{0pt}
 
-\title{The \texttt{qlasso} user's guide}
+\title{The \texttt{qsmooth} user's guide}
 \author{Kwame Okrah \texttt{kwame.okrah@gmail.com} \and
 Hector Corrado Bravo \texttt{hcorrada@gmail.com} \and
 Stephanie C. Hicks \texttt{shicks@jimmy.harvard.edu} \and

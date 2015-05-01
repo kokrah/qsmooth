@@ -4,7 +4,7 @@
 \alias{simulateCounts}
 \title{Simulate RNA-seq counts via Tukey's G transformation and Negative Binomial distribution}
 \usage{
-simulateCounts(mu, groupSize, disp = 0.3, groupFC = NULL,
+simulateCounts(mu, groupSize, disp = 0.1, chiDF = 40, groupFC = NULL,
   techShapeBias = NULL, scaleBias = NULL)
 }
 \arguments{
@@ -14,7 +14,9 @@ simulateCounts(mu, groupSize, disp = 0.3, groupFC = NULL,
 
 \item{disp}{dispersion parameter for NB distribution}
 
-\item{groupFC}{the fc for every gene in every group (use first group as reference).}
+\item{chiDF}{degree of freedom for chisq gene-specific dispersion factor}
+
+\item{groupFC}{the fc for every gene in every group (use first group as reference)}
 
 \item{techShapeBias}{a vector of length sum(groupSize) indicating g shape parameters}
 

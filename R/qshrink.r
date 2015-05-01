@@ -8,9 +8,10 @@
 #' @param verbose show info
 #' @param groupCol character vector indicating the group color for each sample  
 #' @param plot plot weights? (default=FALSE)
+#' @param ... plot options
 #' @export 
 qshrink = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
-                               verbose=FALSE, groupCol=NULL, plot=FALSE) {
+                    verbose=FALSE, groupCol=NULL, plot=FALSE, ...) {
   # 1. Compute quantile stats
   res = qstats(exprs, groups, refType=refType, groupLoc=groupLoc, window=window)
   
@@ -40,7 +41,7 @@ qshrink = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
   
   # 4. Average ties  
   normExprs = aveTies(RANKS, normExprs)
-    
+  
   rownames(normExprs) = rownames(exprs)
   colnames(normExprs) = colnames(exprs)
   
@@ -57,12 +58,12 @@ qshrink = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
       sel = sample(1:lq, 10000)
         
       plot(u[sel], w[sel], pch=".", main="Quantile reference weights",
-           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1), ...)
       
     }else{
       
       plot(u, w, pch=".", main="Quantile reference weights",
-           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1), ...)
       
     }
 

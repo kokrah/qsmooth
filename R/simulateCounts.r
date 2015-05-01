@@ -3,11 +3,12 @@
 #' @param mu base counts
 #' @param groupSize vector containing each group size. Names of groupSize should be the group names
 #' @param disp dispersion parameter for NB distribution
-#' @param groupFC the fc for every gene in every group (use first group as reference).
+#' @param groupFC the fc for every gene in every group (use first group as reference)
+#' @param chiDF degree of freedom for chisq gene-specific dispersion factor
 #' @param techShapeBias a vector of length sum(groupSize) indicating g shape parameters
 #' @param scaleBais a vector of length sum(groupSize) indicating scaling factors
 #' @export
-simulateCounts = function(mu, groupSize, disp=0.3, groupFC=NULL, techShapeBias=NULL, scaleBias=NULL) {
+simulateCounts = function(mu, groupSize, disp=0.1, chiDF=40, groupFC=NULL, techShapeBias=NULL, scaleBias=NULL) {
   
   ngroups = length(groupSize)
   
@@ -82,10 +83,12 @@ simulateCounts = function(mu, groupSize, disp=0.3, groupFC=NULL, techShapeBias=N
       z = z * sdz + mz
       
       z = round(exp(z))
-      
+        
       z = z * scaleBias[[k]][j]
       
-      counts = cbind(counts, rnbinom(length(z), mu=z, size = 1 / disp))
+      DISP = dispf(z, a=sqrt(disp), chiDF=chiDF)
+      
+      counts = cbind(counts, rnbinom(length(z), mu=z, size = 1 / DISP))
       
     }
     
