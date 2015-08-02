@@ -10,7 +10,7 @@
 #' @param plot plot weights? (default=FALSE)
 #' @param ... plot options
 #' @export 
-qshrink = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
+qsmooth = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
                     verbose=FALSE, groupCol=NULL, plot=FALSE, ...) {
   # 1. Compute quantile stats
   res = qstats(exprs, groups, refType=refType, groupLoc=groupLoc, window=window)
