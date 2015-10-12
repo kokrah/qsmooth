@@ -2,50 +2,40 @@
 #' 
 #' @param exprs for counts use log2(raw counts + 1)), for MA use log2(raw intensities)
 #' @param groups groups to which samples belong (character vector)
-#' @param refType type of quantile reference (defualt="mean")
-#' @param groupLoc type of group location estimate (default="mean")
-#' @param window window size for running median
-#' @param verbose show info
-#' @param groupCol character vector indicating the group color for each sample  
+#' @param norm.factors scaling normalization factors
 #' @param plot plot weights? (default=FALSE)
-#' @param ... plot options
+#' @param window window size for running median as a fraction on the number of rows of exprs
 #' @export 
-qsmooth = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
-                    verbose=FALSE, groupCol=NULL, plot=FALSE, ...) {
-  # 1. Compute quantile stats
-  res = qstats(exprs, groups, refType=refType, groupLoc=groupLoc, window=window)
+qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE, window=0.01) {
   
-  QBETAS = res$QBETAS
-  Qref = res$Qref
-  X = res$X
-  w = res$smoothWeights
+  # Scale normalization step
+  if (is.null(norm.factors)) {
+    dat = exprs
+  }else{
+    dat = t(t(exprs) - norm.factors)
+  }
   
-  # 2. Compute weighted quantiles
-  wQBETAS = QBETAS * (1 - w)
+  # Compute quantile stats
+  qs = qstats(dat, groups, window=window)
+  Qref = qs$Qref 
+  Qhat = qs$Qhat  
+  w = qs$smoothWeights
   
-  wQBETAS = X %*% t(wQBETAS)
+  # Weighted quantiles
+  normExprs = w * Qref + (1 - w) * Qhat
   
-  wQref = Qref * w
-  
-  wQref = matrix(rep(1, nrow(X)), ncol=1) %*% t(wQref)
-  
-  normExprs = t(wQBETAS + wQref)
-  
-  # 3. Re-order
-  RANKS = t(matrixStats::colRanks(exprs, ties.method = "average"))
+  # Re-order
+  RANKS = apply(exprs, 2, rank, ties.method="average")
   
   for (k in 1:ncol(normExprs)) {
     x = normExprs[, k]
     normExprs[, k] = x[RANKS[, k]]
   }
   
-  # 4. Average ties  
+  # Average ties  
   normExprs = aveTies(RANKS, normExprs)
   
-  rownames(normExprs) = rownames(exprs)
-  colnames(normExprs) = colnames(exprs)
-  
-  # 5. Plot weights
+  # Plot weights
   if (plot) {
     
     oldpar = par(mar=c(4, 4, 1.5, 0.5))
@@ -56,22 +46,24 @@ qsmooth = function (exprs, groups, refType="mean", groupLoc="mean", window=99,
     if (length(u) > 10000) { # do not plot more than 10000 points
       
       sel = sample(1:lq, 10000)
-        
+      
       plot(u[sel], w[sel], pch=".", main="Quantile reference weights",
-           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1), ...)
+           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
       
     }else{
       
       plot(u, w, pch=".", main="Quantile reference weights",
-           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1), ...)
+           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
       
     }
-
+    
     abline(h=0.5, v=0.5, col="red", lty=2)
     
     par(oldpar)
-  
+    
   }
   
+  rownames(normExprs) = rownames(exprs)
+  colnames(normExprs) = colnames(exprs)
   normExprs
 }

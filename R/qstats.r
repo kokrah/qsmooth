@@ -2,94 +2,35 @@
 #' 
 #' @param exprs for counts use log2(raw counts + 1)), for MA use log2(raw intensities)
 #' @param groups groups to which samples belong (character vector)
-#' @param refType type of quantile reference (defualt="mean")
-#' @param groupLoc type of group location estimate (default="mean")
-#' @param window window size for running median
+#' @param window window size for running median as a fraction on the number of rows of exprs
 #' @export 
-qstats = function (exprs, groups, refType="mean", groupLoc="mean", window=99) {
+qstats = function (exprs, groups, window) {
   
-  # 1. Compute sample quantiles
+  # Compute sample quantiles
   Q = apply(exprs, 2, sort) 
   
-  # 2. Compute quantile reference
-  if (refType == "median") {
-    Qref = matrixStats::rowMedians(Q)  
-  }
-    
-  if (refType == "mean") {
-    Qref = rowMeans(Q)  
-  }
+  # Compute quantile reference
+  Qref = rowMeans(Q)  
   
-  # 3. Compute group location estimates
-  uGroups = unique(groups)
+  # Compute SST
+  SST = rowSums((Q - Qref)^2)
   
-  if (groupLoc=="mean") {
-    QBETAS = c()
-    
-    for (g in uGroups) {
-      QBETAS = cbind(QBETAS, rowMeans(Q[, g==groups]))
-    }
-    
-    colnames(QBETAS) = uGroups
-  }
+  # Compute SSB
+  f = factor(as.character(groups))
+  X = model.matrix(~ 0 + f)
+  QBETAS = t(solve(t(X) %*% X) %*% t(X) %*% t(Q))
+  Qhat = QBETAS %*% t(X)
+  SSB = rowSums((Qhat - Qref)^2)
   
-  if (groupLoc=="median") {
-    QBETAS = c()
-    
-    for (g in uGroups) {
-       QBETAS = cbind(QBETAS, matrixStats::rowMedians(Q[, g==groups]))
-    }
-
-    colnames(QBETAS) = uGroups
-  }
+  # Compute weights
+  roughWeights = 1 - SSB / SST
+  roughWeights[SST < 1e-6] = 1
   
-  # 4. Compute group variance estimates
-  if (groupLoc=="mean") {
-    TAU = matrixStats::rowVars(QBETAS)  
-  }
+  # Compute smooth weights
+  k = floor(window * nrow(Q))
+  if (k %% 2 == 0) k = k + 1
+  smoothWeights = runmed(roughWeights, k = k, endrule="constant")
   
-  if (groupLoc=="median") {
-    TAU = (matrixStats::rowMads(QBETAS))^2
-  }
-  
-  # 5. Compute within group variance estimates
-  if (groupLoc=="mean") {
-    SIGMA = c()
-    
-    for (g in uGroups) {
-      SIGMA = cbind(SIGMA, matrixStats::rowVars(Q[, g==groups]))
-    }
-    
-    SIGMA = rowMeans(SIGMA)
-  }
-
-  if (groupLoc=="median") {
-    SIGMA = c()
-    
-    for (g in uGroups) {
-      SIGMA = cbind(SIGMA, (matrixStats::rowMads(Q[, g==groups]))^2)
-    }
-    
-    SIGMA = matrixStats::rowMedians(SIGMA)
-  }
-  
-  
-  # 6. Compute weights 
-  roughWeights = SIGMA / (SIGMA + TAU)
-  
-  # if both SIGMA and TAU are 0, put 100% weigth on Ref.
-  roughWeights[SIGMA < 10^(-6) & TAU < 10^(-6)] = 1 
-
-#   u = (1:nrow(Q) - 0.5) / nrow(Q)
-#   l = lowess(u, roughWeights, f=span)
-#   f = approxfun(l, rule = 2)
-# #   smoothWeights = f(u)
-  smoothWeights = runmed(roughWeights, k = window, endrule="constant")
-#   smoothWeights[smoothWeights > 1] = 1
-  
-  # 7. List results
-  list(Q=Q, Qref=Qref, QBETAS=QBETAS, TAU=TAU, SIGMA=SIGMA,
-       roughWeights=roughWeights, smoothWeights=smoothWeights,
-       X = model.matrix(~0+factor(groups, levels=uGroups)))
-  
+  list(Q=Q, Qref=Qref, Qhat=Qhat, QBETAS=QBETAS, SST=SST, SSB=SSB, SSE=SST-SSB,
+       roughWeights=roughWeights, smoothWeights=smoothWeights)
 }

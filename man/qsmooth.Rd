@@ -4,27 +4,18 @@
 \alias{qsmooth}
 \title{Quantile shrinkage normalization}
 \usage{
-qsmooth(exprs, groups, refType = "mean", groupLoc = "mean", window = 99,
-  verbose = FALSE, groupCol = NULL, plot = FALSE, ...)
+qsmooth(exprs, groups, norm.factors = NULL, plot = FALSE, window = 0.01)
 }
 \arguments{
 \item{exprs}{for counts use log2(raw counts + 1)), for MA use log2(raw intensities)}
 
 \item{groups}{groups to which samples belong (character vector)}
 
-\item{refType}{type of quantile reference (defualt="mean")}
-
-\item{groupLoc}{type of group location estimate (default="mean")}
-
-\item{window}{window size for running median}
-
-\item{verbose}{show info}
-
-\item{groupCol}{character vector indicating the group color for each sample}
+\item{norm.factors}{scaling normalization factors}
 
 \item{plot}{plot weights? (default=FALSE)}
 
-\item{...}{plot options}
+\item{window}{window size for running median as a fraction on the number of rows of exprs}
 }
 \description{
 Quantile shrinkage normalization

@@ -4,18 +4,14 @@
 \alias{qstats}
 \title{Compute quantile statistics}
 \usage{
-qstats(exprs, groups, refType = "mean", groupLoc = "mean", window = 99)
+qstats(exprs, groups, window)
 }
 \arguments{
 \item{exprs}{for counts use log2(raw counts + 1)), for MA use log2(raw intensities)}
 
 \item{groups}{groups to which samples belong (character vector)}
 
-\item{refType}{type of quantile reference (defualt="mean")}
-
-\item{groupLoc}{type of group location estimate (default="mean")}
-
-\item{window}{window size for running median}
+\item{window}{window size for running median as a fraction on the number of rows of exprs}
 }
 \description{
 Compute quantile statistics

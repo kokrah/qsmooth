@@ -25,8 +25,7 @@ ave.ties = function (ranks, y) {
 #' @param RANKS matrix of ranks 
 #' @param normExprs normalized values 
 aveTies = function (RANKS, normExprs) {
-  normExprs
-  
+
   for (k in ncol(RANKS)) {
     normExprs[,k] = ave.ties(RANKS[,k], normExprs[,k])
   }
