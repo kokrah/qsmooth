@@ -4,7 +4,7 @@
 \alias{qsmooth}
 \title{Quantile shrinkage normalization}
 \usage{
-qsmooth(exprs, groups, norm.factors = NULL, plot = FALSE, window = 0.01)
+qsmooth(exprs, groups, norm.factors = NULL, plot = FALSE, window = 0.05)
 }
 \arguments{
 \item{exprs}{for counts use log2(raw counts + 1)), for MA use log2(raw intensities)}

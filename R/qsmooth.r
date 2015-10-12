@@ -6,7 +6,7 @@
 #' @param plot plot weights? (default=FALSE)
 #' @param window window size for running median as a fraction on the number of rows of exprs
 #' @export 
-qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE, window=0.01) {
+qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE, window=0.05) {
   
   # Scale normalization step
   if (is.null(norm.factors)) {
