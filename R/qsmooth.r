@@ -8,6 +8,9 @@
 #' @export 
 qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE, window=0.05) {
   
+  # Stop if exprs contains any NA
+  if (any(is.na(exprs))) stop("exprs contains NAs (K.Okrah)")
+  
   # Scale normalization step
   if (is.null(norm.factors)) {
     dat = exprs
@@ -24,16 +27,37 @@ qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE, window=0.05) {
   # Weighted quantiles
   normExprs = w * Qref + (1 - w) * Qhat
   
-  # Re-order
-  RANKS = apply(exprs, 2, rank, ties.method="average")
-  
-  for (k in 1:ncol(normExprs)) {
-    x = normExprs[, k]
-    normExprs[, k] = x[RANKS[, k]]
-  }
-  
-  # Average ties  
-  normExprs = aveTies(RANKS, normExprs)
+  # Re-order normExprs by rank of exprs (columnwise)
+  for (i in 1:ncol(normExprs)) {
+    # Grab ref. i
+    ref = normExprs[,i]
+    
+    # Grab exprs column i
+    x = exprs[,i]
+    
+    # Grab ranks of x (using min rank for ties)
+    rmin = rank(x, ties.method="min")
+    
+    # If x has rank ties then average the values of ref at those ranks
+    dups = duplicated(rmin)
+    
+    if (any(dups)) {
+      # Grab ranks of x (using random ranks for ties) 
+      # (needed to uniquely identify the indices of tied ranks)
+      rrand = rank(x, ties.method="random")
+      
+      # Grab tied ranks
+      tied.ranks = unique(rmin[dups])
+      
+      for (k in tied.ranks) {
+        sel = rrand[rmin == k] # Select the indices of tied ranks 
+        ref[sel] = ave(ref[sel])
+      }
+    }
+    
+    # Re-order ref and replace in normExprs
+    normExprs[,i] = ref[rmin]
+  }  
   
   # Plot weights
   if (plot) {
