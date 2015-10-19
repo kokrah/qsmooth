@@ -3,7 +3,6 @@
 #' @param exprs for counts use log2(raw counts + 1)), for MA use log2(raw intensities)
 #' @param groups groups to which samples belong (character vector)
 #' @param window window size for running median as a fraction on the number of rows of exprs
-#' @export 
 qstats = function (exprs, groups, window) {
   
   # Compute sample quantiles
