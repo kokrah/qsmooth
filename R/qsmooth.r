@@ -4,9 +4,10 @@
 #' @param groups groups to which samples belong (character vector)
 #' @param norm.factors scaling normalization factors
 #' @param plot plot weights? (default=FALSE)
-#' @param window window size for running median as a fraction on the number of rows of exprs
 #' @export 
-qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE, window=0.05) {
+qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE) {
+  # window size for running median as a fraction on the number of rows of exprs
+  window=0.05
   
   # Stop if exprs contains any NA
   if (any(is.na(exprs))) stop("exprs contains NAs (K.Okrah)")

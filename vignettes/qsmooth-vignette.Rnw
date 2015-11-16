@@ -1,0 +1,302 @@
+%\VignetteIndexEntry{The qsmooth user's guide}
+%\VignettePackage{qsmooth}
+%\VignetteEngine{knitr::knitr}
+\documentclass{article}
+
+<<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
+    BiocStyle::latex()
+@
+
+\setlength{\parskip}{1\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{The \texttt{qsmooth} user's guide}
+\author{Kwame Okrah \texttt{okrah.kwame@gene.com} \and
+Hector Corrado Bravo \texttt{hcorrada@gmail.com} \and
+Stephanie C. Hicks \texttt{shicks@jimmy.harvard.edu} \and
+Rafael A. Irizarry \texttt{rafa@jimmy.harvard.edu} }
+
+\date{Modified: March 5, 2015.  Compiled: \today}
+
+\begin{document}
+
+\maketitle
+ 
+\tableofcontents
+
+\section{Introduction}
+
+In the advent of high-throughput technologies
+(such as microarray and RNA-seq) crude assumptions 
+were made in order to pre-process and normalize 
+the data \cite{loven2012revisiting}.
+These crude assumptions were needed because
+of large technical variablilty and very few samples
+sizes. 
+For some data sets the normalization techniques 
+based on these crude assumptions lead to a 
+significant loss in biological information
+\cite{loven2012revisiting, hicks}.
+With the current improvements in technology and 
+reduction in cost we are now able to relax some
+of the previous assumptions to allow for a more
+nuanced and information retaining normalization 
+techniques.
+In this vignette we introduce,
+smooth quantile normalization (\texttt{\bf{qsmooth}}), 
+a generalization of quantile normalization \cite{bolstad2003comparison}
+that makes the assumption that: all samples within the same biological 
+group should have the same shape.
+
+\texttt{\bf{Qsmooth}} first performs quantile normalization within 
+each biological group and then shrinks the group quantiles
+towards the overall reference quantile depending on the variation 
+between the group quantiles and the variation of quantiles 
+within the groups. The alogorithm is described in Figure \ref{algo}
+below. Let gene$(g)$ denote the g${}^{th}$ row after sorting each 
+column in the data. 
+For each row gene$(g)$ we compute the weight $w_{(g)} \in [0, 1]$.
+Where a 0 weight implies quantile normalization within groups and
+a weight of 1 indicates quantile normalization across the groups.
+The weight at each row depends on the between group sum of squares
+$(SSB_{(g)})$ and total sum of squares 
+$(SST_{(g)})$, as follow median$\{1 - SSB_{(g)} / SST_{(g)} | g = g -k, g, g+k \}$,
+where $k=$floor(total number of genes* 0.05).
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\columnwidth]{qsmooth_algo.pdf}
+\end{center}
+\small\normalsize
+\caption[qsmooth algorithm]
+         {{\bf The qsmooth algorithm.} 
+          At each quantile compute $R^2$.}
+\label{algo}
+\end{figure}
+
+\newpage
+\section{Rat bodymap}
+
+\subsection{Data 1}
+
+We begin by loading the \texttt{\bf{qsmooth}} into R. 
+
+<<lib-load, message=FALSE>>=
+library(qsmooth)
+@
+
+The first example is based a data set (data1)
+which contains lung samples from 21 week old male and female rats. 
+Four samples are from males and four samples are from females.
+
+<<data-1,  echo=FALSE, message=FALSE>>=
+library(Biobase)
+library(bodymapRat)
+
+pd = pData(bodymapRat) # grab pheno data
+
+# Specify samples
+sel = pd$organ %in% "Lung" # select lung samples
+sel = sel & pd$stage == 21 # select stage 21 weeks
+sel = sel & pd$techRep == 1 # select biological replicates 
+
+# Filter out low counts
+keep = rowMeans(exprs(bodymapRat)) > 10
+data1 = bodymapRat[keep, sel]
+@
+
+Below are the boxplots and the density estimate plots
+of the raw counts after after adding 1 and 
+followed by a log2 transformation (ie. log2(counts+1)).
+
+<<raw1, fig.align='center', fig.height=3, fig.width=7.5, echo=FALSE>>=
+pd1 = pData(data1)
+data1 = log2(exprs(data1) + 1)  
+
+# Grab sex info.
+sex = pd1$sex
+
+par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
+par(mfrow=c(1, 2))  
+
+# boxplot
+boxplot(data1, col=ifelse(sex=="F", "steelblue", "tomato"), main="Raw data", 
+        names=sex, ylab="log2(expression)", pch=".", 
+        cex.axis=0.8)
+
+# density plot
+plot(0, 0, xlim=c(0, 18), ylim=c(0, 0.17), ylab="Density", xlab="log2(expression)",
+     pch="", main="Density estimate")
+legend("topright", col=c("steelblue", "tomato"), legend=c("F", "M"), pch=19,
+       cex=0.8)
+for (i in 1:ncol(data1)) {
+  points(density(data1[, i]), type="l", col=ifelse(sex[i]=="F", "steelblue", "tomato"))
+}
+
+par(mfrow=c(1, 1)) 
+@
+
+To run the \texttt{\bf{qsmooth}} algorithm on the log transformed raw counts.
+We must specify sample groups. 
+In this example we will use sex as the grouping factor.
+
+<<qsmooth1, fig.align='center', fig.height=2.5, fig.width=3.5>>=
+norm.data1 = qsmooth(exprs=data1, groups=sex, plot=TRUE)
+@
+
+The parameter plot=TRUE indicates that we want to see the 
+weigths of interpolation.
+Weights are computed for each quantile in the data set.
+A weight of 1 indicates full quantile normalization,
+where as a weight of 0 indicates quantile normalization
+within the groups.
+
+In this example the weights are mostly close to 1,
+indicating that the is no major difference between the 
+quantiles from the female and male samples.
+Here the \texttt{\bf{qsmooth}} algorithm outputs results
+that is identical (for practical purposes)
+to full quantile normalization. 
+
+<<norm.data1, fig.align='center', fig.height=3, fig.width=8, echo=FALSE>>=
+par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
+par(mfrow=c(1, 2))  
+
+# boxplot
+boxplot(norm.data1, col=ifelse(sex=="F", "steelblue", "tomato"), main="Qsmooth data", 
+        names=sex, ylab="log2(expression)", pch=".", 
+        cex.axis=0.8)
+
+# density plot
+plot(0, 0, xlim=c(0, 18), ylim=c(0, 0.17), ylab="Density", xlab="log2(expression)",
+     pch="", main="Density estimate")
+legend("topright", col=c("steelblue", "tomato"), legend=c("F", "M"), pch=19,
+       cex=0.8)
+for (i in 1:ncol(norm.data1)) {
+  points(density(norm.data1[, i]), type="l", col=ifelse(sex[i]=="F", "steelblue", "tomato"))
+}
+
+par(mfrow=c(1, 1))
+@
+
+\subsection{Example 2}
+The first examples consists of a data set which contains lung samples 
+from 21 week old male and female rats. 
+Four samples from males and a four samples from females.
+
+<<data-12,  echo=FALSE, message=FALSE>>=
+# Specify samples
+sel = pd$organ %in% c("Lung", "Liver") # select lung and liver samples
+sel = sel & pd$stage == 21 # select stage 21 weeks
+sel = sel & pd$techRep == 1 # select biological replicates 
+
+# Filter out low counts
+keep = rowMeans(exprs(bodymapRat)) > 10
+data2 = bodymapRat[keep, sel]
+@
+
+Let's take a look at the raw data. 
+Below is the boxplot and the density plot
+of the raw counts after after adding 1 followed by a 
+log2 transformation.
+
+<<raw12, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
+par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
+pd2 = pData(data2)
+data2 = log2(exprs(data2) + 1)  
+
+# Grab sex and organ info.
+sex = pd2$sex
+organ = pd2$organ
+
+groups = paste0(sex, organ)
+col = ifelse(groups=="FLung", "steelblue", 
+             ifelse(groups=="MLung", "tomato",
+                    ifelse(groups=="FLiver", "seagreen", "orange")))
+par(mfrow=c(1, 2))  
+
+# boxplot
+boxplot(data2, col=col, main="Raw data", 
+        names=sex, ylab="log2(expression)", pch=".", 
+        cex.axis=0.8)
+
+# density plot
+plot(0, 0, xlim=c(0, 18), ylim=c(0, 0.17), ylab="Density", xlab="log2(expression)",
+     pch="", main="Density estimate", las=3)
+legend("topright", col=c("steelblue", "tomato", "seagreen", "orange"), 
+       legend=c("Lung F", "Lung M", "Liver F", "Liver M"), pch=19,
+       cex=0.8)
+for (i in 1:ncol(data2)) {
+  points(density(data2[, i]), type="l", col=col[i])
+}
+
+par(mfrow=c(1, 1)) 
+@
+
+We now run the qsmooth algorithm on the log transform raw counts.
+First we must specify sample groups. In this example we specify
+the groupings using sex 
+<<qsmooth12, fig.align='center', fig.height=3, fig.width=4>>=
+norm.data2 = qsmooth(exprs=data2, groups=paste0(sex, organ), plot=TRUE)
+@
+
+<<norm.data12, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
+par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
+par(mfrow=c(1, 2))  
+
+# boxplot
+boxplot(norm.data2, col=col, main="Qsmooth data", 
+        names=sex, ylab="log2(expression)", pch=".", 
+        cex.axis=0.8)
+
+# density plot
+plot(0, 0, xlim=c(0, 18), ylim=c(0, 0.17), ylab="Density", xlab="log2(expression)",
+     pch="", main="Density estimate")
+legend("topright", col=c("steelblue", "tomato", "seagreen", "orange"), 
+       legend=c("Lung F", "Lung M", "Liver F", "Liver M"), pch=19,
+       cex=0.8)
+for (i in 1:ncol(norm.data2)) {
+  points(density(norm.data2[, i]), type="l", col=col[i])
+}
+
+par(mfrow=c(1, 1))
+@
+
+\section{Qsmooth}
+The \texttt{qsmooth} function accepts four parameters. 
+Two are required and the other two are optional.
+The \texttt{qsmooth} function requires an expression matrix and a 
+character vector or factor specifying which group a sample belongs,
+for the exprs and groups parameters respectively.
+The \texttt{plot} parameter is optional. It specifies whether or
+not the weights should be plotted. It is set to FALSE be defualt.
+The \texttt{norm.factors} allows the user to specify a 
+vector of scaling factors that will be used to modify the 
+expression data set prior to applying the qsmooth algorithm.
+
+\subsection{Pre-specified scaling factors}
+
+<<qsmooth13, fig.align='center', fig.height=3, fig.width=4>>=
+norm.data3 = qsmooth(exprs=data2, groups=paste0(sex, organ), 
+                     norm.factors = apply(data2, 2, mean))
+@
+
+<<qsmooth14, fig.align='center', fig.height=3, fig.width=4>>=
+par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
+
+# boxplot
+boxplot(norm.data3, col=col, main="Qsmooth data", 
+        names=sex, ylab="log2(expression)", pch=".", 
+        cex.axis=0.8)
+
+@
+
+\section{SessionInfo}
+
+<<sessionInfo,results ='markup'>>=
+sessionInfo()
+@
+
+\bibliography{myrefs}
+
+\end{document}
