@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  16 NOV 2015 08:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  7 DEC 2015 08:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -378,105 +378,115 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write4
 \openout4 = `qsmooth-vignette.toc'.
 
- <qsmooth_algo.pdf, id=44, 325.215pt x 216.81pt>
-File: qsmooth_algo.pdf Graphic file (type pdf)
-
-<use qsmooth_algo.pdf>
-Package pdftex.def Info: qsmooth_algo.pdf used on input line 118.
-(pdftex.def)             Requested size: 500.484pt x 333.6833pt.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 94.
 
 [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Package color Info: Redefining color shadecolor on input line 135.
+<qsmooth_algo.pdf, id=72, 433.62pt x 325.215pt>
+File: qsmooth_algo.pdf Graphic file (type pdf)
+ <use qsmooth_algo.pdf>
+Package pdftex.def Info: qsmooth_algo.pdf used on input line 142.
+(pdftex.def)             Requested size: 500.484pt x 375.3838pt.
+Package color Info: Redefining color shadecolor on input line 165.
+ [2 <./qsmooth_algo.pdf>]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 137.
-Package color Info: Redefining color shadecolor on input line 153.
-
-<figure/raw1-1.pdf, id=65, 542.025pt x 216.81pt>
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 167.
+Package color Info: Redefining color shadecolor on input line 189.
+ <figure/raw1-1.pdf, id=130, 578.16pt x 252.945pt>
 File: figure/raw1-1.pdf Graphic file (type pdf)
- <use figure/raw1-1.pdf>
-Package pdftex.def Info: figure/raw1-1.pdf used on input line 155.
-(pdftex.def)             Requested size: 500.484pt x 200.20204pt.
 
-[2 <./qsmooth_algo.pdf>]
-Package color Info: Redefining color shadecolor on input line 168.
-
-<figure/qsmooth1-1.pdf, id=116, 252.945pt x 180.675pt>
+<use figure/raw1-1.pdf>
+Package pdftex.def Info: figure/raw1-1.pdf used on input line 191.
+(pdftex.def)             Requested size: 500.484pt x 218.96037pt.
+Package color Info: Redefining color shadecolor on input line 206.
+ <figure/qsmooth1-1.pdf, id=131, 289.08pt x 216.81pt>
 File: figure/qsmooth1-1.pdf Graphic file (type pdf)
 
 <use figure/qsmooth1-1.pdf>
-Package pdftex.def Info: figure/qsmooth1-1.pdf used on input line 174.
-(pdftex.def)             Requested size: 252.94438pt x 180.67729pt.
-Package color Info: Redefining color shadecolor on input line 197.
+Package pdftex.def Info: figure/qsmooth1-1.pdf used on input line 213.
+(pdftex.def)             Requested size: 289.07928pt x 216.81938pt.
+ [3 <./figure/raw1-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 238.
 
-<figure/norm_data1-1.pdf, id=117, 578.16pt x 216.81pt>
+<figure/norm_data1-1.pdf, id=144, 578.16pt x 252.945pt>
 File: figure/norm_data1-1.pdf Graphic file (type pdf)
 
 <use figure/norm_data1-1.pdf>
-Package pdftex.def Info: figure/norm_data1-1.pdf used on input line 199.
-(pdftex.def)             Requested size: 500.484pt x 187.68031pt.
- [3 <./figure/raw1-1.pdf> <./figure/qsmooth1-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 220.
- <figure/raw12-1.pdf, id=134, 578.16pt x 252.945pt>
-File: figure/raw12-1.pdf Graphic file (type pdf)
- <use figure/raw12-1.pdf>
-Package pdftex.def Info: figure/raw12-1.pdf used on input line 222.
+Package pdftex.def Info: figure/norm_data1-1.pdf used on input line 240.
 (pdftex.def)             Requested size: 500.484pt x 218.96037pt.
-Package color Info: Redefining color shadecolor on input line 234.
+ [4 <./figure/qsmooth1-1.pdf> <./figure/norm_data1-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 262.
+ <figure/norm_data2-1.pdf, id=162, 578.16pt x 252.945pt>
+File: figure/norm_data2-1.pdf Graphic file (type pdf)
 
-<figure/qsmooth12-1.pdf, id=135, 289.08pt x 216.81pt>
+<use figure/norm_data2-1.pdf>
+Package pdftex.def Info: figure/norm_data2-1.pdf used on input line 264.
+(pdftex.def)             Requested size: 500.484pt x 218.96037pt.
+Package color Info: Redefining color shadecolor on input line 277.
+
+<figure/qsmooth12-1.pdf, id=163, 289.08pt x 216.81pt>
 File: figure/qsmooth12-1.pdf Graphic file (type pdf)
 
 <use figure/qsmooth12-1.pdf>
-Package pdftex.def Info: figure/qsmooth12-1.pdf used on input line 240.
+Package pdftex.def Info: figure/qsmooth12-1.pdf used on input line 283.
 (pdftex.def)             Requested size: 289.07928pt x 216.81938pt.
-Package color Info: Redefining color shadecolor on input line 249.
-
-<figure/norm_data12-1.pdf, id=136, 578.16pt x 252.945pt> [4 <./figure/norm_data
-1-1.pdf> <./figure/raw12-1.pdf>]
+ [5 <./figure/norm_data2-1.pdf> <./figure/qsmooth12-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 302.
+ <figure/norm_data12-1.pdf, id=180, 578.16pt x 252.945pt>
 File: figure/norm_data12-1.pdf Graphic file (type pdf)
- <use figure/norm_data12-1.pdf>
-Package pdftex.def Info: figure/norm_data12-1.pdf used on input line 251.
-(pdftex.def)             Requested size: 500.484pt x 218.96037pt.
-Package color Info: Redefining color shadecolor on input line 274.
- [5 <./figure/qsmooth12-1.pdf> <./figure/norm_data12-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 283.
 
-<figure/qsmooth14-1.pdf, id=170, 289.08pt x 216.81pt>
+<use figure/norm_data12-1.pdf>
+Package pdftex.def Info: figure/norm_data12-1.pdf used on input line 304.
+(pdftex.def)             Requested size: 500.484pt x 218.96037pt.
+ [6 <./figure/norm_data12-1.pdf>]
+<ercc.pdf, id=204, 505.89pt x 216.81pt>
+File: ercc.pdf Graphic file (type pdf)
+ <use ercc.pdf>
+Package pdftex.def Info: ercc.pdf used on input line 364.
+(pdftex.def)             Requested size: 500.484pt x 214.497pt.
+Package color Info: Redefining color shadecolor on input line 375.
+
+<figure/qsmooth14-1.pdf, id=205, 289.08pt x 216.81pt>
 File: figure/qsmooth14-1.pdf Graphic file (type pdf)
 
 <use figure/qsmooth14-1.pdf>
-Package pdftex.def Info: figure/qsmooth14-1.pdf used on input line 294.
+Package pdftex.def Info: figure/qsmooth14-1.pdf used on input line 389.
 (pdftex.def)             Requested size: 289.07928pt x 216.81938pt.
-Package color Info: Redefining color shadecolor on input line 305.
- (./qsmooth-vignette.bbl
+Package color Info: Redefining color shadecolor on input line 398.
 
-LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 7.
+<figure/norm_data14-1.pdf, id=206, 578.16pt x 252.945pt>
+File: figure/norm_data14-1.pdf Graphic file (type pdf)
 
-[6 <./figure/qsmooth14-1.pdf>])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 333.
- [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 333.
- (./qsmooth-vignette.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 333.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 333.
+<use figure/norm_data14-1.pdf>
+Package pdftex.def Info: figure/norm_data14-1.pdf used on input line 400.
+(pdftex.def)             Requested size: 500.484pt x 218.96037pt.
+ [7 <./ercc.pdf> <./figure/qsmooth14-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 411.
+
+(./qsmooth-vignette.bbl [8 <./figure/norm_data14-1.pdf>])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 439.
+ [9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 439.
+
+(./qsmooth-vignette.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 439.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 439.
 Package rerunfilecheck Info: File `qsmooth-vignette.out' has not changed.
-(rerunfilecheck)             Checksum: D5A13A5740953C0F4345DC8E717B8996;385.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 333.
+(rerunfilecheck)             Checksum: 79F5C6B22DDC36F0FA4201046922FCF3;499.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 439.
  ) 
 Here is how much of TeX's memory you used:
- 6481 strings out of 493117
- 97680 string characters out of 6135433
- 193551 words of memory out of 5000000
- 9846 multiletter control sequences out of 15000+600000
+ 6522 strings out of 493117
+ 98366 string characters out of 6135433
+ 193840 words of memory out of 5000000
+ 9869 multiletter control sequences out of 15000+600000
  9819 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,12n,45p,413b,445s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,12n,45p,313b,420s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pf
 b></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
@@ -490,10 +500,10 @@ cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/lo
 cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
 al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/loca
 l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on qsmooth-vignette.pdf (7 pages, 480699 bytes).
+Output written on qsmooth-vignette.pdf (9 pages, 638922 bytes).
 PDF statistics:
- 238 PDF objects out of 1000 (max. 8388607)
- 186 compressed objects within 2 object streams
- 21 named destinations out of 1000 (max. 500000)
- 97 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 326 PDF objects out of 1000 (max. 8388607)
+ 259 compressed objects within 3 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 115 words of extra memory for PDF output out of 10000 (max. 10000000)
 

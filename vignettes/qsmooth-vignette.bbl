@@ -1,16 +1,17 @@
 \begin{thebibliography}{1}
 
-\bibitem{loven2012revisiting}
-Jakob Lov{\'e}n, David~A Orlando, Alla~A Sigova, Charles~Y Lin, Peter~B Rahl,
-  Christopher~B Burge, David~L Levens, Tong~Ihn Lee, and Richard~A Young.
-\newblock Revisiting global gene expression analysis.
-\newblock {\em Cell}, 151(3):476--482, 2012.
+\bibitem{aanes2014normalization}
+H{\aa}vard Aanes, Cecilia Winata, Lars~F Moen, Olga {\O}strup, Sinnakaruppan
+  Mathavan, Philippe Collas, Torbj{\o}rn Rognes, and Peter Alestr{\"o}m.
+\newblock Normalization of rna-sequencing data from samples with varying mrna
+  levels.
+\newblock {\em PloS one}, 9(2):e89158, 2014.
 
-\bibitem{hicks}
-Stephanie Hicks and Rafael Irizarry.
-\newblock quantro: a data-driven approach to guide the choice of an appropriate
-  normalization method.
-\newblock {\em Genome Biology}, 16(1):117, 2015.
+\bibitem{robinson2010scaling}
+Mark~D Robinson, Alicia Oshlack, et~al.
+\newblock A scaling normalization method for differential expression analysis
+  of rna-seq data.
+\newblock {\em Genome Biol}, 11(3):R25, 2010.
 
 \bibitem{bolstad2003comparison}
 Benjamin~M Bolstad, Rafael~A Irizarry, Magnus {\AA}strand, and Terence~P.
@@ -18,5 +19,41 @@ Benjamin~M Bolstad, Rafael~A Irizarry, Magnus {\AA}strand, and Terence~P.
 \newblock A comparison of normalization methods for high density
   oligonucleotide array data based on variance and bias.
 \newblock {\em Bioinformatics}, 19(2):185--193, 2003.
+
+\bibitem{eisenberg2013human}
+Eli Eisenberg and Erez~Y Levanon.
+\newblock Human housekeeping genes, revisited.
+\newblock {\em Trends in Genetics}, 29(10):569--574, 2013.
+
+\bibitem{loven2012revisiting}
+Jakob Lov{\'e}n, David~A Orlando, Alla~A Sigova, Charles~Y Lin, Peter~B Rahl,
+  Christopher~B Burge, David~L Levens, Tong~Ihn Lee, and Richard~A Young.
+\newblock Revisiting global gene expression analysis.
+\newblock {\em Cell}, 151(3):476--482, 2012.
+
+\bibitem{hicks}
+Stephanie~C. Hicks and Rafael~A. Irizarry.
+\newblock When to use quantile normalization?
+\newblock {\em bioRxiv}, 2014.
+\newblock \href {http://dx.doi.org/10.1101/012203} {\path{doi:10.1101/012203}}.
+
+\bibitem{baker2005external}
+Shawn~C Baker, Steven~R Bauer, Richard~P Beyer, James~D Brenton, Bud Bromley,
+  John Burrill, Helen Causton, Michael~P Conley, Rosalie Elespuru, Michael
+  Fero, et~al.
+\newblock The external rna controls consortium: a progress report.
+\newblock {\em Nature methods}, 2(10):731--734, 2005.
+
+\bibitem{external2005proposed}
+External RNA~Controls Consortium et~al.
+\newblock Proposed methods for testing and selecting the ercc external rna
+  controls.
+\newblock {\em BMC genomics}, 6(1):150, 2005.
+
+\bibitem{risso2014normalization}
+Davide Risso, John Ngai, Terence~P Speed, and Sandrine Dudoit.
+\newblock Normalization of rna-seq data using factor analysis of control genes
+  or samples.
+\newblock {\em Nature biotechnology}, 32(9):896--902, 2014.
 
 \end{thebibliography}

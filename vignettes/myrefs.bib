@@ -1,11 +1,265 @@
-@article{hicks,
-author = {Hicks, Stephanie and Irizarry, Rafael},
-title = {quantro: a data-driven approach to guide the choice of an appropriate normalization method},
-journal = {Genome Biology},
-volume = {16},
-year = {2015},
-number = {1},
-pages = {117}
+@article{dillies2013comprehensive,
+  title={A comprehensive evaluation of normalization methods for Illumina high-throughput RNA sequencing data analysis},
+  author={Dillies, Marie-Agn{\`e}s and Rau, Andrea and Aubert, Julie and Hennequet-Antier, Christelle and Jeanmougin, Marine and Servant, Nicolas and Keime, C{\'e}line and Marot, Guillemette and Castel, David and Estelle, Jordi and others},
+  journal={Briefings in bioinformatics},
+  volume={14},
+  number={6},
+  pages={671--683},
+  year={2013},
+  publisher={Oxford Univ Press}
+}
+
+@article{laird2010principles,
+  title={Principles and challenges of genome-wide DNA methylation analysis},
+  author={Laird, Peter W},
+  journal={Nature Reviews Genetics},
+  volume={11},
+  number={3},
+  pages={191--203},
+  year={2010},
+  publisher={Nature Publishing Group}
+}
+
+@article{mar2009data,
+  title={Data-driven normalization strategies for high-throughput quantitative RT-PCR},
+  author={Mar, Jessica C and Kimura, Yasumasa and Schroder, Kate and Irvine, Katharine M and Hayashizaki, Yoshihide and Suzuki, Harukazu and Hume, David and Quackenbush, John},
+  journal={BMC bioinformatics},
+  volume={10},
+  number={1},
+  pages={110},
+  year={2009},
+  publisher={BioMed Central Ltd}
+}
+
+@article{external2005proposed,
+  title={Proposed methods for testing and selecting the ERCC external RNA controls},
+  author={External RNA Controls Consortium and others},
+  journal={BMC genomics},
+  volume={6},
+  number={1},
+  pages={150},
+  year={2005},
+  publisher={BioMed Central Ltd}
+}
+
+
+@article{ambionSpike,
+	author = {Life Technologies},
+	title = {ERCC rna spike-in control mixes (user's guide).
+	Publication number: 4455352, Catalog Number: 4456740, 4456739.},
+	year = {2014},
+	publisher = {Life Technologies},	
+	journal = {Life Technologies}
+}
+
+@book{johnson1992applied,
+  title={Applied multivariate statistical analysis},
+  author={Johnson, Richard Arnold and Wichern, Dean W and others},
+  volume={4},
+  year={1992},
+  publisher={Prentice hall Englewood Cliffs, NJ}
+}
+
+@article{Hicks,
+	author = {Hicks, Stephanie C. and Irizarry, Rafael A.},
+	title = {When to use Quantile Normalization?},
+	year = {2014},
+	doi = {10.1101/012203},
+	publisher = {Cold Spring Harbor Labs Journals},
+	abstract = {Normalization and preprocessing are essential steps for the analysis of high-throughput data including next-generation sequencing and microarrays. Multi-sample global normalization methods, such as quantile normalization, have been successfully used to remove technical variation from noisy data. These methods rely on the assumption that observed global changes across samples are due to unwanted technical variability. Transforming the data to remove these differences has the potential to remove interesting biologically driven global variation and therefore may not be appropriate depending on the type and source of variation. Currently, it is up to the subject matter experts, for example biologists, to determine if the stated assumptions are appropriate or not. Here, we propose a data-driven method to test for the assumptions of global normalization methods. We demonstrate the utility of our method (quantro), by applying it to multiple gene expression and DNA methylation and show examples of when global normalization methods are not appropriate. We also perform a Monte Carlo simulation study to illustrate how our method generally outperforms the current approach. An R-package implementing our method is available on Bioconductor (http://www.bioconductor.org/packages/release/bioc/html/quantro.html).},
+	journal = {bioRxiv}
+}
+
+@article{zien2001centralization,
+  title={Centralization: a new method for the normalization of gene expression data},
+  author={Zien, Alexander and Aigner, Thomas and Zimmer, Ralf and Lengauer, Thomas},
+  journal={Bioinformatics},
+  volume={17},
+  number={suppl 1},
+  pages={S323--S331},
+  year={2001},
+  publisher={Oxford Univ Press}
+}
+
+@article{casella1985introduction,
+  title={An introduction to empirical Bayes data analysis},
+  author={Casella, George},
+  journal={The American Statistician},
+  volume={39},
+  number={2},
+  pages={83--87},
+  year={1985},
+  publisher={Taylor \& Francis}
+}
+
+@article{eisenberg2013human,
+  title={Human housekeeping genes, revisited},
+  author={Eisenberg, Eli and Levanon, Erez Y},
+  journal={Trends in Genetics},
+  volume={29},
+  number={10},
+  pages={569--574},
+  year={2013},
+  publisher={Elsevier}
+}
+
+@article{risso2014normalization,
+  title={Normalization of RNA-seq data using factor analysis of control genes or samples},
+  author={Risso, Davide and Ngai, John and Speed, Terence P and Dudoit, Sandrine},
+  journal={Nature biotechnology},
+  volume={32},
+  number={9},
+  pages={896--902},
+  year={2014},
+  publisher={Nature Publishing Group}
+}
+
+@book{korpelainen2014rna,
+  title={RNA-seq Data Analysis: A Practical Approach},
+  author={Korpelainen, Eija and Tuimala, Jarno and Somervuo, Panu and Huss, Mikael and Wong, Garry},
+  year={2014},
+  publisher={CRC Press}
+}
+
+@article{sanger1975rapid,
+  title={A rapid method for determining sequences in DNA by primed synthesis with DNA polymerase},
+  author={Sanger, Fred and Coulson, Alan R},
+  journal={Journal of molecular biology},
+  volume={94},
+  number={3},
+  pages={441--448},
+  year={1975},
+  publisher={Elsevier}
+}
+
+@article{seqc2014,
+  title={A comprehensive assessment of RNA-seq accuracy, reproducibility and information content by the Sequencing Quality Control Consortium},
+  author={SEQC/MAQC-III Consortium and others},
+  journal={Nature Biotechnology},
+  volume={32},
+  number={9},
+  pages={903--914},
+  year={2014},
+  publisher={Nature Publishing Group}
+}
+
+@article{love2014,
+  title={Moderated estimation of fold change and dispersion for RNA-Seq data with DESeq2},
+  author={Love, Michael I and Huber, Wolfgang and Anders, Simon},
+  journal={Genome biology},
+  volume={15},
+  number={12},
+  pages={550},
+  year={2014},
+  publisher={BioMed Central Ltd}
+}
+
+@article{bullard2010evaluation,
+  title={Evaluation of statistical methods for normalization and differential expression in mRNA-Seq experiments},
+  author={Bullard, James H and Purdom, Elizabeth and Hansen, Kasper D and Dudoit, Sandrine},
+  journal={BMC bioinformatics},
+  volume={11},
+  number={1},
+  pages={94},
+  year={2010},
+  publisher={BioMed Central Ltd}
+}
+
+@article{robinson2010scaling,
+  title={A scaling normalization method for differential expression analysis of RNA-seq data},
+  author={Robinson, Mark D and Oshlack, Alicia and others},
+  journal={Genome Biol},
+  volume={11},
+  number={3},
+  pages={R25},
+  year={2010}
+}
+
+@article{risso2011gc,
+  title={GC-content normalization for RNA-Seq data},
+  author={Risso, Davide and Schwartz, Katja and Sherlock, Gavin and Dudoit, Sandrine},
+  journal={BMC bioinformatics},
+  volume={12},
+  number={1},
+  pages={480},
+  year={2011},
+  publisher={BioMed Central Ltd}
+}
+
+@article{witten2010ultra,
+  title={Ultra-high throughput sequencing-based small RNA discovery and discrete statistical biomarker analysis in a collection of cervical tumours and matched controls},
+  author={Witten, Daniela and Tibshirani, Robert and Gu, Sam G and Fire, Andrew and Lui, Weng-Onn},
+  journal={BMC biology},
+  volume={8},
+  number={1},
+  pages={58},
+  year={2010},
+  publisher={BioMed Central Ltd}
+}
+
+@article{huang2001assessment,
+  title={Assessment of cisplatin-induced nephrotoxicity by microarray technology},
+  author={Huang, Qihong and Dunn, Robert T and Jayadev, Supriya and DiSorbo, Olimpia and Pack, Franklin D and Farr, Spencer B and Stoll, Raymond E and Blanchard, Kerry T},
+  journal={Toxicological Sciences},
+  volume={63},
+  number={2},
+  pages={196--207},
+  year={2001},
+  publisher={Soc Toxicology}
+}
+
+@article{nuwaysir1999microarrays,
+  title={Microarrays and toxicology: the advent of toxicogenomics},
+  author={Nuwaysir, Emile F and Bittner, Michael and Trent, Jeffrey and Barrett, J Carl and Afshari, Cynthia A},
+  journal={Molecular carcinogenesis},
+  volume={24},
+  number={3},
+  pages={153--159},
+  year={1999}
+}
+
+@article{minning2003microarray,
+  title={Microarray profiling of gene expression during trypomastigote to amastigote transition in Trypanosoma cruzi},
+  author={Minning, Todd A and Bua, Jacqueline and Garcia, Gabriela A and McGraw, RA and Tarleton, Rick L},
+  journal={Molecular and biochemical parasitology},
+  volume={131},
+  number={1},
+  pages={55--64},
+  year={2003},
+  publisher={Elsevier}
+}
+
+@article{alsford2011high,
+  title={High-throughput phenotyping using parallel sequencing of RNA interference targets in the African trypanosome},
+  author={Alsford, Sam and Turner, Daniel J and Obado, Samson O and Sanchez-Flores, Alejandro and Glover, Lucy and Berriman, Matthew and Hertz-Fowler, Christiane and Horn, David},
+  journal={Genome research},
+  volume={21},
+  number={6},
+  pages={915--924},
+  year={2011},
+  publisher={Cold Spring Harbor Lab}
+}
+
+@article{wilhelm2008dynamic,
+  title={Dynamic repertoire of a eukaryotic transcriptome surveyed at single-nucleotide resolution},
+  author={Wilhelm, Brian T and Marguerat, Samuel and Watt, Stephen and Schubert, Falk and Wood, Valerie and Goodhead, Ian and Penkett, Christopher J and Rogers, Jane and B{\"a}hler, J{\"u}rg},
+  journal={Nature},
+  volume={453},
+  number={7199},
+  pages={1239--1243},
+  year={2008},
+  publisher={Nature Publishing Group}
+}
+
+@article{baker2005external,
+  title={The external RNA controls consortium: a progress report},
+  author={Baker, Shawn C and Bauer, Steven R and Beyer, Richard P and Brenton, James D and Bromley, Bud and Burrill, John and Causton, Helen and Conley, Michael P and Elespuru, Rosalie and Fero, Michael and others},
+  journal={Nature methods},
+  volume={2},
+  number={10},
+  pages={731--734},
+  year={2005},
+  publisher={Nature Publishing Group}
 }
 
 @article{bolstad2003comparison,
@@ -16,6 +270,56 @@ pages = {117}
   number={2},
   pages={185--193},
   year={2003},
+  publisher={Oxford Univ Press}
+}
+
+@article{aanes2014normalization,
+  title={Normalization of RNA-sequencing data from samples with varying mRNA levels},
+  author={Aanes, H{\aa}vard and Winata, Cecilia and Moen, Lars F and {\O}strup, Olga and Mathavan, Sinnakaruppan and Collas, Philippe and Rognes, Torbj{\o}rn and Alestr{\"o}m, Peter},
+  journal={PloS one},
+  volume={9},
+  number={2},
+  pages={e89158},
+  year={2014},
+  publisher={Public Library of Science}
+}
+
+@article{anders2014htseq,
+  title={HTSeq--A Python framework to work with high-throughput sequencing data},
+  author={Anders, Simon and Pyl, Paul Theodor and Huber, Wolfgang},
+  journal={Bioinformatics},
+  pages={btu638},
+  year={2014},
+  publisher={Oxford Univ Press}
+}
+
+@article{liao2014featurecounts,
+  title={featureCounts: an efficient general purpose program for assigning sequence reads to genomic features},
+  author={Liao, Yang and Smyth, Gordon K and Shi, Wei},
+  journal={Bioinformatics},
+  volume={30},
+  number={7},
+  pages={923--930},
+  year={2014},
+  publisher={Oxford Univ Press}
+}
+
+@article{langmead2009ultrafast,
+  title={Ultrafast and memory-efficient alignment of short DNA sequences to the human genome},
+  author={Langmead, Ben and Trapnell, Cole and Pop, Mihai and Salzberg, Steven L and others},
+  journal={Genome Biol},
+  volume={10},
+  number={3},
+  pages={R25},
+  year={2009}
+}
+
+@article{liao2013subread,
+  title={The Subread aligner: fast, accurate and scalable read mapping by seed-and-vote},
+  author={Liao, Yang and Smyth, Gordon K and Shi, Wei},
+  journal={Nucleic acids research},
+  pages={gkt214},
+  year={2013},
   publisher={Oxford Univ Press}
 }
 
@@ -30,6 +334,834 @@ pages = {117}
   publisher={Elsevier}
 }
 
+@article{wang2009rna,
+  title={RNA-Seq: a revolutionary tool for transcriptomics},
+  author={Wang, Zhong and Gerstein, Mark and Snyder, Michael},
+  journal={Nature Reviews Genetics},
+  volume={10},
+  number={1},
+  pages={57--63},
+  year={2009},
+  publisher={Nature Publishing Group}
+}
+
+@article{fodor1993multiplexed,
+  title={Multiplexed biochemical assays with biological chips},
+  author={Fodor, Stephen and Rava, Richard P and Huang, Xiaohua C and Pease, Ann C and Holmes, Christopher P and Adams, Cynthia L},
+  journal={Nature},
+  volume={364},
+  pages={555--556},
+  year={1993}
+}
+
+@article{ferguson2014ppar,
+  title={PPAR agonists regulate brain gene expression: Relationship to their effects on ethanol consumption},
+  author={Ferguson, Laura B and Most, Dana and Blednov, Yuri A and Harris, R Adron},
+  journal={Neuropharmacology},
+  volume={86},
+  pages={397--407},
+  year={2014},
+  publisher={Elsevier}
+}
+
+@article{shahmanesh2015differential,
+  title={Differential Adipose Tissue Gene Expression Profiles in Abacavir Treated Patients That May Contribute to the Understanding of Cardiovascular Risk: A Microarray Study},
+  author={Shahmanesh, Mohsen and Phillips, Kenneth and Boothby, Meg and Tomlinson, Jeremy W},
+  journal={PloS one},
+  volume={10},
+  number={1},
+  year={2015},
+  publisher={Public Library of Science}
+}
+
+@article{koh2014noninvasive,
+  title={Noninvasive in vivo monitoring of tissue-specific global gene expression in humans},
+  author={Koh, Winston and Pan, Wenying and Gawad, Charles and Fan, H Christina and Kerchner, Geoffrey A and Wyss-Coray, Tony and Blumenfeld, Yair J and El-Sayed, Yasser Y and Quake, Stephen R},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={111},
+  number={20},
+  pages={7361--7366},
+  year={2014},
+  publisher={National Acad Sciences}
+}
+
+@article{lipshutz1999high,
+  title={High density synthetic oligonucleotide arrays},
+  author={Lipshutz, Robert J and Fodor, Stephen PA and Gingeras, Thomas R and Lockhart, David J},
+  journal={Nature genetics},
+  volume={21},
+  pages={20--24},
+  year={1999},
+  publisher={Nature Publishing Group}
+}
+
+@book{brooker2009genetics,
+  title={Genetics: analysis \& principles},
+  author={Brooker, Robert J},
+  year={2009},
+  publisher={Granite Hill Publishers}
+}
+
+@book{kohane2002microarrays,
+  title={Microarrays for an integrative genomics},
+  author={Kohane, Isaac S and Butte, Atul J and Kho, Alvin},
+  year={2002},
+  publisher={MIT press}
+}
+
+@ARTICLE{Anders2010,
+
+  author = {S. Anders and W. Huber},
+  
+  title = {Differential expression analysis for sequence count data},
+  
+  journal = {Genome biology},
+  
+  year = {2010},
+  
+  volume = {11},
+  
+  pages = {R106}
+}
+
+@ARTICLE{Badrinath1991,
+
+  author = {S. Badrinath and S. Chatterjee},
+  
+  title = {A data-analytic look at skewness and elongation in common-stock-return distributions},
+  
+  journal = {Journal of Business \& Economic Statistics},
+  
+  year = {1991},
+  
+  volume = {9},
+  
+  pages = {223--233}
+}
+
+@ARTICLE{Benjamini1995,
+
+  title={Controlling the false discovery rate: a practical and powerful approach to multiple testing},
+  
+  author={Y. Benjamini and Y. Hochberg},
+  
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  
+  pages={289--300},
+  
+  volume={52},
+  
+  year={1995}
+}
+
+@ARTICLE{Bolstad2003,
+
+  title={A comparison of normalization methods for high density oligonucleotide
+         array data based on variance and bias},
+  
+  author={B. Bolstad and R. Irizarry and M. Astrand and T. Speed},
+  
+  journal={Bioinformatics},
+  
+  volume={19},
+  
+  pages={185--193},
+  
+  year={2003}
+}
+
+@ARTICLE{Degen2007,
+
+  author = {M. Degen and P. Embrechts and D. Lambrigger},
+  
+  title = {The quantitative modeling of operational risk: between g-and-h and {EVT}},
+  
+  journal = {Astin Bulletin},
+  
+  year = {2007},
+  
+  volume =	 {37},
+  
+  pages = {265}
+}
+
+@ARTICLE{Delicado2008,
+
+  title={A small sample comparison of maximum likelihood, moments and {L}-moments methods for the asymmetric exponential power distribution},
+  
+  author={P. Delicado and M. Goria},
+  
+  journal={Computational Statistics \& Data Analysis},
+  
+  volume={52},
+  
+  pages={1661--1673},
+  
+  year={2008}
+}
+
+@ARTICLE{Dutta2006,
+
+  author = {K. Dutta and J. Perry},
+  
+  title = {A tale of tails: An empirical analysis of loss distribution models for estimating operational risk capital},
+  
+  journal = {FRB of Boston Working Paper},
+  
+  year = {2006}
+}
+
+@ARTICLE{Elamir2004,
+
+  title={Exact variance structure of sample {L}-moments},
+  
+  author={Elamir, Elsayed AH and Seheult, Allan H},
+  
+  journal={Journal of Statistical Planning and Inference},
+  
+  volume={124},
+  
+  pages={337--359},
+  
+  year={2004}
+}
+
+@ARTICLE{Frazee2011,
+
+  author = {A. Frazee and B. Langmead and J. Leek},
+  
+  title = {ReCount: a multi-experiment resource of analysis-ready {RNA}-seq gene count datasets},
+  
+  journal = {BMC bioinformatics},
+  
+  year = {2011},
+  
+  volume = {12},
+  
+  pages = {449}
+}
+
+@ARTICLE{Greenwood1979,
+
+  title={Probability weighted moments: definition and relation to parameters of several distributions expressable in inverse form},
+  
+  author={J. Greenwood and J. Landwehr and N. Matalas and J. Wallis},
+  
+  journal={Water Resources Research},
+  
+  volume={15},
+  
+  pages={1049--1054},
+  
+  year={1979}
+}
+
+@BOOK{Hoaglin1983,
+
+  author = {D. Hoaglin and  F. Mosteller and J.  Tukey},
+  
+  title = {Understanding Robust and Exploratory Data Analysis},
+  
+  journal = {Wiley Series in Probability and Mathematical Statistics},
+  
+  publisher = {Wiley},
+  
+  address = {New York, NY},
+  
+  year = {1983}
+}
+
+@BOOK{Hoaglin1985,
+
+  author = {D. Hoaglin and  F. Mosteller and J.  Tukey},
+  
+  title = {Exploring Data, Tables, Trends, and Shapes},
+  
+  journal = {Wiley Series in Probability and Mathematical Statistics},
+  
+  publisher = {Wiley},
+  
+  address = {New York, NY},
+  
+  year = {1985}
+}
+
+@BOOK{Asquith2011,
+  title={Distributional analysis with L-moment statistics using the R environment for statistical computing},
+  
+  author={W. Asquith},
+  
+  year={2011},
+  
+  publisher={CreateSpace Independent Publishing Platform}
+}
+
+@ARTICLE{Hoen2013,
+
+  title = {Reproducibility of high-throughput m{RNA} and small {RNA} sequencing across laboratories},
+  
+  author = {P. Hoen and M. Friedl{\"a}nder and J. Alml{\"o}f and M. Sammeth and I. Pulyakhina and 
+  		S. Anvar and J. Laros and H. Buermans and O. Karlberg and M. Br{\"a}nnvall and others},
+  
+  journal = {Nature biotechnology},
+  
+  year = {2013},
+  
+  pages = {1015--1022},
+  
+  volume = {31}
+}
+
+@ARTICLE{Hosking1990,
+
+  title={{L}-moments: analysis and estimation of distributions using linear combinations of order statistics},
+  
+  author={J. Hosking},
+  
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  
+  pages={105--124},
+  
+  volume={52},
+  
+  year={1990},
+}
+
+@ARTICLE{Hosking1992,
+  title={Moments or {L}-moments? An example comparing two measures of distributional shape},
+  
+  author={J. Hosking},
+  
+  journal={The American Statistician},
+  
+  volume={46},
+  
+  pages={186--189},
+  
+  year={1992}
+}
+
+@BOOK{Hosking2005,
+
+  title={Regional frequency analysis: an approach based on {L}-moments},
+  
+  author={J. Hosking and J. Wallis},
+  
+  year={2005},
+  
+  publisher={Cambridge University Press}
+}
+
+@BOOK{McCuen1985,
+
+  title={Statistical methods for engineers},
+  
+  author={R. McCuen},
+
+  year={1985},
+  
+  publisher={Prentice Hall PTR}
+}
+
+
+@ARTICLE{Khan2003,
+  
+  author = {A. Khan and G. Rayner},
+  
+  title = {Robustness to non-normality of common tests for the many-sample location problem},
+  
+  journal = {Journal of Applied Mathematics \& Decision Sciences},
+  
+  year = {2003},
+  
+  volume = {7},
+  
+  pages = {187--206}
+}
+
+@ARTICLE{Kirby1974,
+
+  title={Algebraic boundedness of sample statistics},
+  
+  author={W. Kirby},
+  
+  journal={Water Resources Research},
+  
+  volume={10},
+  
+  pages={220--222},
+  
+  year={1974}
+}
+
+@ARTICLE{Law2014,
+
+  author = {C. Law and Y. Chen and W. Shi and G. Smyth},
+		     
+  title = {voom: precision weights unlock linear model analysis tools for {RNA}-seq read counts},
+  
+  journal = {Genome Biology},
+  
+  year = {2014},
+  
+  volume = {15},
+  
+  pages = {R29}
+}
+
+@ARTICLE{Loven2012,
+
+  title={Revisiting global gene expression analysis},
+  
+  author={J. Loven and D. Orlando and A. Sigova and C. Lin and P. Rahl and others},
+  
+  journal={Cell},
+  
+  volume={151},
+  
+  pages={476},
+  
+  year={2012}
+}
+
+@ARTICLE{Mortazavi2008,
+
+  author = {A. Mortazavi and B.Williams and K. McCue and L. Shchaeffer and B. Wold},
+  
+  title = {Mapping and quantifying mammalian transcriptomes by {RNA}-Seq},
+  
+  journal = {Nature Methods},
+  
+  year = {2008},
+  
+  volume = {5},
+  
+  pages = {621--628}
+}
+
+@ARTICLE{Marioni2008,
+
+  title = {RNA-seq: an assessment of technical reproducibility and comparison with gene expression arrays},
+
+  author = {J. Marioni and C. Mason and S. Mane and M. Stephens and Y. Gilad},
+
+  journal = {Genome research},
+
+  volume = {18},
+
+  pages = {1509--1517},
+
+  year = {2008}
+}
+
+@ARTICLE{Statham2012,
+
+  title = {Bisulfite sequencing of chromatin immunoprecipitated {DNA} ({BisChIP}-seq) 
+  	     directly informs methylation status of histone-modified DNA},
+  
+  author = {A. Statham and M. Robinson and J. Song and M. Coolen and C. Stirzaker and S. Clark},
+  
+  journal = {Genome research},
+  
+  volume = {22},
+  
+  pages = {1120--1127},
+  
+  year = {2012}
+}
+
+@ARTICLE{Soneson2013,
+    
+  author = {C. Soneson and M. Delorenzi},
+     
+  title = {A comparison of methods for differential expression analysis of {RNA}-seq data},
+      
+  journal = {BMC bioinformatics},
+      
+  year = {2013},
+  
+  volume = {14},
+  
+  pages = {91}
+}
+
+@ARTICLE{Smyth2004,
+  
+  author = {G. Smyth},
+  
+  title = {Linear models and empirical bayes methods for assessing differential expression in microarray
+                   experiments},
+                   
+  journal = {Stat Appl Genet Mol Biol},
+  
+  year = {2004},
+  
+  volume = {3},
+  
+  pages = {3}
+}
+
+@ARTICLE{Robinsion2008,
+
+  author = {M. Robinson and G. Smyth},
+  
+  title = {Small sample estimation of negative binomial dispersion, with applications to {SAGE} data},
+  
+  journal = {Biostatistics},
+  
+  year = {2008},
+  
+  volume = {9},
+  
+  pages = {321}
+}
+
+@ARTICLE{Robinson2007,
+
+  author = {M. Robinson and G. Smyth},
+  
+  title = {Moderated statistical tests for assessing differences in tag abundance},
+  
+  journal = {Bioinformatics},
+  
+  year = {2007},
+  
+  volume = {23},
+  
+  pages = {2881}
+}
+
+@ARTICLE{Robinson2010,
+
+  author = {M. Robinson and D. McCarthy and G. Smyth},
+  
+  title = {edgeR: a {B}ioconductor package for differential expression analysis of digital gene expression data},
+  
+  journal = {Bioinformatics},
+  
+  year = {2010},
+  
+  volume = {26},
+  
+  pages = {139}
+}
+
+@ARTICLE{Rapaport2013,
+
+  author = {F. Rapaport and R. Khanin and Y. Liang and M. Pirun and A. Krek and P. Zumbo and
+  		    C. Mason and N. Socci and D. Betel},
+		     
+  title = {Comprehensive evaluation of differential gene expression analysis methods for {RNA}-seq data},
+  
+  journal = {Genome Biology},
+  
+  year = {2013},
+  
+  volume = {14},
+  
+  pages = {R95}
+}
+
+@CONFERENCE{Tukey1977,
+
+  author = {J. Tukey},
+  
+  title = {Modern techniques in data analysis},
+  
+  booktitle = {NSF-sponsored regional research conference at Southeastern Massachusetts University},
+  
+  address = {North Dartmouth, MA},
+  
+  year = {1977} 
+}
+
+@BOOK{Scheffe1999,
+
+  title={The analysis of variance},
+  
+  author={H. Scheff\'e},
+  
+  volume={72},
+  
+  year={1999},
+  
+  publisher={John Wiley \& Sons}
+}
+
+@ARTICLE{Martinez1984,
+
+  author = {J. Martinez and B. Iglewicz},
+  
+  title = {Some properties of the Tukey g and h family of distributions},
+  
+  journal = {Communications in Statistics-Theory and Methods},
+  
+  year = {1984},
+  
+  volume = {13},
+  
+  pages = {353--369}
+}
+
+@ARTICLE{Xu2014,
+
+  author = {Y. Xu and B. Iglewicz and I. Chervoneva},
+  
+  title = {Robust Estimation of the Parameters of g-and-h Distributions, with Applications to Outlier Detection},
+  
+  journal = {Computational Statistics \& Data Analysis},
+  
+  year = {2014},
+  
+  volume = {75},
+  
+  pages = {66-80}
+}
+
+@ARTICLE{Mills1995,
+
+  author = {C. Mills},
+  
+  title = {Modelling skewness and kurtosis in the {L}ondon {S}tock {E}xchange {FT-SE} index return distributions},
+  
+  journal = {The Statistician},
+  
+  year = {1995},
+  
+  volume = {44},
+  
+  pages = {323--332}
+}
+
+@ARTICLE{Sankarasubramanian1999,
+
+  title={Investigation and comparison of sampling properties of {L}-moments and conventional moments},
+  
+  author={A. Sankarasubramanian and K. Srinivasan},
+  
+  journal={Journal of Hydrology},
+  
+  volume={218},
+  
+  number={1},
+  
+  pages={13--34},
+  
+  year={1999}
+}
+
+@ARTICLE{Perez2003,
+
+  title={A theoretical comparison between moments and {L}-moments},
+  
+  author={Perez, Nicolas Hernandez and Menendez, Santiago Carrillo and Seco, Luis},
+  
+  journal={Unpublished paper retrieved from http://risklab.ca/seco/DescriptiveTechnicalArticle.pdf},
+  
+  year={2003}
+}
+
+@ARTICLE{Vogel1993,
+
+  title={{L}-moment diagrams should replace product moment diagrams},
+  
+  author={R. Vogel and N. Fennessey},
+  
+  journal={Water Resources Research},
+  
+  volume={29},
+  
+  pages={1745--1752},
+  
+  year={1993}
+}
+
+@ARTICLE{Peel2001,
+
+  title={The utility of {L}-moment ratio diagrams for selecting a regional probability distribution},
+  
+  author={M. Peel and Q. Wang and R. Vogel and T. McMAHON},
+  
+  journal={Hydrological sciences journal},
+  
+  volume={46},
+  
+  pages={147--155},
+  
+  year={2001}
+}
+
+@ARTICLE{Wilkins1944,
+
+  title={A note on skewness and kurtosis},
+  
+  author={J. Wilkins},
+  
+  journal={The Annals of mathematical statistics},
+  
+  volume={15},
+  
+  pages={333--335},
+  
+  year={1944}
+}
+
+@ARTICLE{Rayner2002,
+
+  author = {G. Rayner and H. MacGillivray},
+  
+  title = {Numerical maximum likelihood estimation for the g-and-k and generalized g-and-h distributions},
+  
+  journal = {Statistics and Computing},
+  
+  year = {2002},
+  
+  volume = {1}, 
+  
+  pages = {57--75}    
+}
+
+@ARTICLE{Xu2013,
+
+  title = {Parallel comparison of Illumina RNA-Seq and Affymetrix microarray 
+  	     platforms on transcriptomic profiles generated from 5-aza-deoxy-cytidine 
+              treated HT-29 colon cancer cells and simulated datasets},
+  
+  author = {X. Xu and Y. Zhang and J. Williams and E. Antoniou and W. McCombie 
+                   and S. Wu and W. Zhu and N. Davidson and P. Denoya and E. Li},
+  
+  journal = {BMC Bioinformatics},
+  
+  volume = {14},
+  
+  pages = {S1},
+  
+  year = {2013}
+}
+
+@ARTICLE{Schena1995,
+
+  author =  {M. Schena and D. Shalon and R. Davis and P. Brown},
+  
+  title = {Quantitative monitoring of gene expression patterns with a complementary DNA microarray},
+  
+  journal = {Science},
+  
+  year = {1995},
+  
+  volume = {270},
+  
+  pages = { 467--470}
+}
+
+@ARTICLE{Leek2010,
+  title={Tackling the widespread and critical impact of batch effects in high-throughput data},
+  
+  author={J. Leek and R. Scharpf and H. Bravo and D. Simcha and B. Langmead and W. Johnson and D. Geman and K. Baggerly and R. Irizarry},
+  
+  journal={Nature Reviews Genetics},
+  
+  volume={11},
+  
+  pages={733--739},
+  
+  year={2010}
+}
+
+@article{Glusman2013,
+  title={Optimal Scaling of Digital Transcriptomes},
+  
+  author={G. Glusman and J. Caballero and M. Robinson and B. Kutlu and L. Hood},
+  
+  journal={PloS one},
+  
+  volume={8},
+  
+  pages={e77885},
+  
+  year={2013}
+}
+
+@article{Bottomly2011,
+  title={Evaluating gene expression in {C57BL/6J} and {DBA/2J} mouse striatum using {RNA}-Seq and microarrays},
+  
+  author={D. Bottomly and N. Walter and J. Hunter and P. Darakjian and S. Kawane and K. Buck and R. Searles and M. Mooney and S. McWeeney and R. Hitzemann},
+  
+  journal={PloS one},
+  
+  volume={6},
+  
+  pages={e17820},
+  
+  year={2011},
+}
+
+@article{Pickrell2010,
+  title={Understanding mechanisms underlying human gene expression variation with {RNA}-sequencing},
+  
+  author={K. Pickrell and J. Marioni and A. Pai and J. Degner and B. Engelhardt and E. Nkadori and J. Veyrieras and M. Stephens and Y. Gilad and J. Pritchard},
+  
+  journal={Nature},
+  
+  volume={464},
+  
+  pages={768--772},
+  
+  year={2010},
+}
+
+@article{Hammoud2014,
+  title={Chromatin and Transcription Transitions of Mammalian Adult Germline Stem Cells and Spermatogenesis},
+  author={S. Hammoud and D. Low and C. Yi and D. Carrell and E. Guccione and B. Cairns},
+  journal={Cell stem cell},
+  year={2014}
+}
+
+@article{Geng2012,
+  title={Corn oil as a vehicle in drug development exerts a dose-dependent effect on gene expression profiles in rat thymus},
+  author={X. Geng and B. Li and L. Zhang and Y. Song and Z. Lin and Y. Zhang and J. Wang},
+  journal={Journal of Applied Toxicology},
+  volume={32},
+  pages={850--857},
+  year={2012},
+}
+
+@article{Feng2014,
+  title={A Bayesian hierarchical model to detect differentially methylated loci from single nucleotide resolution sequencing data},
+  author={H. Feng and K. Conneely and H. Wu},
+  journal={Nucleic acids research},
+  volume={42},
+  pages={e69--e69},
+  year={2014},
+}
+
+@article{Du2010,
+  title={Comparison of Beta-value and M-value methods for quantifying methylation levels by microarray analysis},
+  author={P. Du and X. Zhang and C. Huang and N. Jafari and W. Kibbe and L. Hou and S. Lin},
+  journal={BMC bioinformatics},
+  volume={11},
+  pages={587},
+  year={2010},
+}
+
+@article{Aryee2014,
+  title={Minfi: a flexible and comprehensive Bioconductor package for the analysis of Infinium DNA methylation microarrays},
+  author={M. Aryee and A. Jaffe and H. Corrada-Bravo and C. Ladd-Acosta and A. Feinberg and K. Hansen and R. Irizarry},
+  journal={Bioinformatics},
+  volume={30},
+  pages={1363--1369},
+  year={2014},
+}
+
+@article{Bravo2012,
+  title={Gene expression anti-profiles as a basis for accurate universal cancer signatures},
+  author={H. Corrada-Bravo and V. Pihur and M. McCall and R. Irizarry and J. Leek},
+  journal={BMC bioinformatics},
+  volume={13},
+  pages={272},
+  year={2012},
+}
+
 @Manual{R,
     title = {R: A Language and Environment for Statistical Computing},
     author = {{R Core Team}},
@@ -39,3 +1171,18 @@ pages = {117}
     note = {{ISBN} 3-900051-07-0},
     url = {http://www.R-project.org/},
   }
+  
+@Manual{tukeyGH,
+    title = {tukeyGH: A Language and Environment for Statistical Computing ({R} pacakge)},
+    author = {K. Okrah},
+    year = {2014},
+    url = {https://github.com/kokrah/tukeyGH},
+}
+
+@Manual{ureda,
+    title = {ureda: Shape analysis of high-throughput 
+             experiments data ({R} pacakge)},
+    author = {K. Okrah},
+    year = {2014},
+    url = {https://github.com/kokrah/ureda},
+}

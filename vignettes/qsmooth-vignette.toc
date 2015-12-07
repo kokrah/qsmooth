@@ -1,7 +1,8 @@
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}
 \contentsline {section}{\numberline {2}Rat bodymap}{2}{section.2}
-\contentsline {subsection}{\numberline {2.1}Data 1}{2}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Example 2}{4}{subsection.2.2}
-\contentsline {section}{\numberline {3}Qsmooth}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Pre-specified scaling factors}{5}{subsection.3.1}
-\contentsline {section}{\numberline {4}SessionInfo}{6}{section.4}
+\contentsline {subsection}{\numberline {2.1}Example 1}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Example 2}{5}{subsection.2.2}
+\contentsline {section}{\numberline {3}The qsmooth function}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}External RNA Control Consortium Spike-in Mixes}{6}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Pre-specified scaling factors}{7}{subsection.3.2}
+\contentsline {section}{\numberline {4}SessionInfo}{8}{section.4}

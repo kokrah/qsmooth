@@ -4,7 +4,7 @@
 \alias{qsmooth}
 \title{Quantile shrinkage normalization}
 \usage{
-qsmooth(exprs, groups, norm.factors = NULL, plot = FALSE)
+qsmooth(exprs, groups, norm.factors = NULL, plot = FALSE, window = 0.05)
 }
 \arguments{
 \item{exprs}{for counts use log2(raw counts + 1)), for MA use log2(raw intensities)}
@@ -14,6 +14,8 @@ qsmooth(exprs, groups, norm.factors = NULL, plot = FALSE)
 \item{norm.factors}{scaling normalization factors}
 
 \item{plot}{plot weights? (default=FALSE)}
+
+\item{window}{window size for running median (a fraction of the number of rows of exprs)}
 }
 \description{
 Quantile shrinkage normalization

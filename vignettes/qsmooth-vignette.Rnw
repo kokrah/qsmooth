@@ -12,8 +12,8 @@
 
 \title{The \texttt{qsmooth} user's guide}
 \author{Kwame Okrah \texttt{okrah.kwame@gene.com} \and
-Hector Corrado Bravo \texttt{hcorrada@gmail.com} \and
 Stephanie C. Hicks \texttt{shicks@jimmy.harvard.edu} \and
+Hector Corrado Bravo \texttt{hcorrada@gmail.com} \and
 Rafael A. Irizarry \texttt{rafa@jimmy.harvard.edu} }
 
 \date{Modified: March 5, 2015.  Compiled: \today}
@@ -26,42 +26,66 @@ Rafael A. Irizarry \texttt{rafa@jimmy.harvard.edu} }
 
 \section{Introduction}
 
-In the advent of high-throughput technologies
-(such as microarray and RNA-seq) crude assumptions 
-were made in order to pre-process and normalize 
-the data \cite{loven2012revisiting}.
-These crude assumptions were needed because
-of large technical variablilty and very few samples
-sizes. 
-For some data sets the normalization techniques 
-based on these crude assumptions lead to a 
-significant loss in biological information
-\cite{loven2012revisiting, hicks}.
+Normalization strategies that are based solely 
+on the observed data without any external information typicallly
+make the assumption that: for each cell or tissue under study 
+only a few genes change expression levels or that an equivalent 
+number of genes increase and decrease across the different biological conditions
+\cite{aanes2014normalization}.
+
+These assumptions can be interpreted in different ways 
+leading to different normalization procedures.
+For example, the mean expression level across genes within 
+each sample should be the same across biological conditions 
+\cite{robinson2010scaling}.
+Or that on average the distribution of gene expression within
+each sample should be the same across biological conditions 
+\cite{bolstad2003comparison}. 
+Other normalization methods are based on {\it housekeeping genes}
+\cite{eisenberg2013human}.
+These are genes that are believed to be play a critical role 
+in basic cellular pathways and as such should be 
+expressed all the time at an equal rate independent of 
+biological conditions.  
+While these assumptions may be reasonable in certain
+experiments, they may not always hold \cite{loven2012revisiting, hicks}.
+For example, mRNA content has been shown to fluctuate significantly 
+during zebrafish early developmental stages \cite{aanes2014normalization}.
+It has also been shown that cells with high levels of c-Myc can amplify their 
+global gene expression two to three times more than their low c-Myc 
+counterparts \cite{loven2012revisiting}.
+
 With the current improvements in technology and 
 reduction in cost we are now able to relax some
-of the previous assumptions to allow for a more
+of these assumptions to allow for a more
 nuanced and information retaining normalization 
 techniques.
 In this vignette we introduce,
 smooth quantile normalization (\texttt{\bf{qsmooth}}), 
 a generalization of quantile normalization \cite{bolstad2003comparison}
 that makes the assumption that: all samples within the same biological 
-group should have the same shape.
+group should have the same distribution.
 
 \texttt{\bf{Qsmooth}} first performs quantile normalization within 
 each biological group and then shrinks the group quantiles
 towards the overall reference quantile depending on the variation 
 between the group quantiles and the variation of quantiles 
-within the groups. The alogorithm is described in Figure \ref{algo}
-below. Let gene$(g)$ denote the g${}^{th}$ row after sorting each 
+within the groups. 
+The algorithm is described in Figure \ref{algo}
+below. Let gene(g) denote the g${}^{th}$ row after sorting each 
 column in the data. 
-For each row gene$(g)$ we compute the weight $w_{(g)} \in [0, 1]$.
+For each row, gene(g), we compute the weight $w_{(g)} \in [0, 1]$.
 Where a 0 weight implies quantile normalization within groups and
 a weight of 1 indicates quantile normalization across the groups.
 The weight at each row depends on the between group sum of squares
-$(SSB_{(g)})$ and total sum of squares 
-$(SST_{(g)})$, as follow median$\{1 - SSB_{(g)} / SST_{(g)} | g = g -k, g, g+k \}$,
-where $k=$floor(total number of genes* 0.05).
+$\hbox{SSB}_{(g)}$ and total sum of squares $\hbox{SST}_{(g)}$, 
+as follows:
+\begin{equation}
+w_{(g)} = \hbox{median} \{1 - \hbox{SSB}_{(i)} / \hbox{SST}_{(i)} | ~i = g-k, \dots, g, \dots, g+k \},
+\end{equation}
+where $k=$ floor(Total number of genes * 0.05). 
+By using the rolling median, we borrow information from neighbouring
+genes.
 
 \begin{figure}[!h]
 \begin{center}
@@ -69,47 +93,45 @@ where $k=$floor(total number of genes* 0.05).
 \end{center}
 \small\normalsize
 \caption[qsmooth algorithm]
-         {{\bf The qsmooth algorithm.} 
-          At each quantile compute $R^2$.}
+         {{\bf The qsmooth algorithm}}
 \label{algo}
 \end{figure}
 
-\newpage
+%--------------- Rat bodymap
 \section{Rat bodymap}
 
-\subsection{Data 1}
+The \texttt{\bf{bodymapRat}} package contains an ExpressionSet derived from the Raw FASTQ files 
+obtained from Yu et al. (2013). It contains expression levels (RNAseq) on 11 organs, from male and female rats, at 4 developmental stages. We will use a subset of this data in this vignette.
 
-We begin by loading the \texttt{\bf{qsmooth}} into R. 
+For help with the bodymapRat R-package, there is a vignette available in the /vignettes folder.
 
-<<lib-load, message=FALSE>>=
-library(qsmooth)
-@
+\subsection{Example 1}
 
-The first example is based a data set (data1)
+The first example is based a dataset
 which contains lung samples from 21 week old male and female rats. 
 Four samples are from males and four samples are from females.
 
-<<data-1,  echo=FALSE, message=FALSE>>=
+<<data-1, message=FALSE>>=
 library(Biobase)
 library(bodymapRat)
 
 pd = pData(bodymapRat) # grab pheno data
 
-# Specify samples
+# Subset samples from bodymapRat
 sel = pd$organ %in% "Lung" # select lung samples
 sel = sel & pd$stage == 21 # select stage 21 weeks
 sel = sel & pd$techRep == 1 # select biological replicates 
 
-# Filter out low counts
+# Filter out low count genes
 keep = rowMeans(exprs(bodymapRat)) > 10
 data1 = bodymapRat[keep, sel]
 @
 
 Below are the boxplots and the density estimate plots
-of the raw counts after after adding 1 and 
-followed by a log2 transformation (ie. log2(counts+1)).
+of the data after after adding 1 and 
+log2 transforming the raw counts (ie. log2(counts+1)).
 
-<<raw1, fig.align='center', fig.height=3, fig.width=7.5, echo=FALSE>>=
+<<raw1, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
 pd1 = pData(data1)
 data1 = log2(exprs(data1) + 1)  
 
@@ -140,7 +162,10 @@ To run the \texttt{\bf{qsmooth}} algorithm on the log transformed raw counts.
 We must specify sample groups. 
 In this example we will use sex as the grouping factor.
 
-<<qsmooth1, fig.align='center', fig.height=2.5, fig.width=3.5>>=
+We begin by loading \texttt{\bf{qsmooth}} into R. 
+
+<<qsmooth1, fig.align='center', fig.height=3, fig.width=4>>=
+library(qsmooth)
 norm.data1 = qsmooth(exprs=data1, groups=sex, plot=TRUE)
 @
 
@@ -149,7 +174,8 @@ weigths of interpolation.
 Weights are computed for each quantile in the data set.
 A weight of 1 indicates full quantile normalization,
 where as a weight of 0 indicates quantile normalization
-within the groups.
+within the groups. See Figure \ref{algo} for more details on
+the computation of the weights.
 
 In this example the weights are mostly close to 1,
 indicating that the is no major difference between the 
@@ -158,7 +184,8 @@ Here the \texttt{\bf{qsmooth}} algorithm outputs results
 that is identical (for practical purposes)
 to full quantile normalization. 
 
-<<norm.data1, fig.align='center', fig.height=3, fig.width=8, echo=FALSE>>=
+Below are the boxplots and density plots after normalization.
+<<norm.data1, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
 par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
 par(mfrow=c(1, 2))  
 
@@ -180,12 +207,13 @@ par(mfrow=c(1, 1))
 @
 
 \subsection{Example 2}
-The first examples consists of a data set which contains lung samples 
-from 21 week old male and female rats. 
-Four samples from males and a four samples from females.
+
+The second example is based a dataset
+which contains lung and liver samples from 21 week old male and female rats. 
+Eight samples are from males and eight samples are from females.
 
 <<data-12,  echo=FALSE, message=FALSE>>=
-# Specify samples
+# Subset samples from bodymapRat
 sel = pd$organ %in% c("Lung", "Liver") # select lung and liver samples
 sel = sel & pd$stage == 21 # select stage 21 weeks
 sel = sel & pd$techRep == 1 # select biological replicates 
@@ -200,7 +228,7 @@ Below is the boxplot and the density plot
 of the raw counts after after adding 1 followed by a 
 log2 transformation.
 
-<<raw12, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
+<<norm.data2, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
 par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
 pd2 = pData(data2)
 data2 = log2(exprs(data2) + 1)  
@@ -235,10 +263,21 @@ par(mfrow=c(1, 1))
 
 We now run the qsmooth algorithm on the log transform raw counts.
 First we must specify sample groups. In this example we specify
-the groupings using sex 
+the groupings using sex and organ. 
+
 <<qsmooth12, fig.align='center', fig.height=3, fig.width=4>>=
 norm.data2 = qsmooth(exprs=data2, groups=paste0(sex, organ), plot=TRUE)
 @
+
+In this example the weights are mostly below 0.2 before the median 
+(u = 0.5) and increase steadily to 0.8.
+Indicating that there is a difference in the empirical distributions
+of the samples across the groups. In this scenario full quantile
+normalization is not appropriate.
+
+Below are the boxplots and density plots after normalization.
+Note that within the liver samples males and females show a difference
+that is not in the lung samples.
 
 <<norm.data12, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
 par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
@@ -262,33 +301,95 @@ for (i in 1:ncol(norm.data2)) {
 par(mfrow=c(1, 1))
 @
 
-\section{Qsmooth}
-The \texttt{qsmooth} function accepts four parameters. 
-Two are required and the other two are optional.
+%------------ qsmooth fucntion
+\section{The qsmooth function}
+The \texttt{qsmooth} function accepts five parameters.
+\begin{enumerate}
+\item \texttt{exprs}: for counts use log2(raw counts + 1)), for microarray use log2(raw intensities)
+\item \texttt{groups}: groups to which samples belong (character vector)
+\item \texttt{norm.factors}: scaling normalization factors ({\bf optional})
+\item \texttt{plot}: plot weights? (default=FALSE) ({\bf optional})
+\item \texttt{plot}: window window size for running median (defined as a fraction of the number of rows of exprs) (default=0.05)
+\end{enumerate}
 The \texttt{qsmooth} function requires an expression matrix and a 
-character vector or factor specifying which group a sample belongs,
-for the exprs and groups parameters respectively.
+character vector or factor specifying which group a sample belongs.
 The \texttt{plot} parameter is optional. It specifies whether or
-not the weights should be plotted. It is set to FALSE be defualt.
+not the weights should be plotted (See discussion on spike-in below). 
+It is set to FALSE as defualt. 
 The \texttt{norm.factors} allows the user to specify a 
 vector of scaling factors that will be used to modify the 
 expression data set prior to applying the qsmooth algorithm.
 
+
+\subsection{External RNA Control Consortium Spike-in Mixes}
+
+The External RNA Control Consortium (ERCC)
+is a collaborative group of academic, private, and 
+public organizations hosted at the 
+National Institutes of Standard and Technology (NIST)
+\cite{baker2005external, external2005proposed}. 
+The ERCC has developed a set of 92 mRNA controls 
+(20-mer poly(A) tails) that can be used in gene expression 
+platforms such as RNA-seq, DNA microarrays, and 
+quantitative real-time reverse transcriptase PCR (qRT-PCR).
+The 92 mRNA transcripts are divided into 4 groups labelled
+A, B, C, and D.  
+Each group contains 23 mRNA transcripts 
+spanning a $10^6$-fold concentration range.
+There are two ERCC control spike-in mixes: mix 1 and mix 2. 
+The molar concentration ratios of mix 1 to mix 2 are 4, 1, 0.67, and 
+0.5 for group A, B, C, and D respectively. 
+When the ERCC spike-in mix is used as a 
+control in the experiment its measurements can be used 
+as part of the data normalization process
+\cite{loven2012revisiting, risso2014normalization}.
+
+In Figure \ref{ercc} we show the distribution of the 
+{\bf true and known} concentration of each of the 92 "genes" in 
+mix 1 and mix 2. Based on these plots we can make the 
+assumption that the mix 1 and mix 2 "transcriptomes" have
+the same distribution 
+(even though certain "genes" are differentially expressed).
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\columnwidth]{ercc.pdf}
+\end{center}
+\small\normalsize
+\caption[qsmooth algorithm]
+         {{\bf ERCC spike-in mix 1 and mix 2}}
+\label{ercc}
+\end{figure}
+
 \subsection{Pre-specified scaling factors}
 
-<<qsmooth13, fig.align='center', fig.height=3, fig.width=4>>=
-norm.data3 = qsmooth(exprs=data2, groups=paste0(sex, organ), 
-                     norm.factors = apply(data2, 2, mean))
+<<qsmooth14, fig.align='center', fig.height=3, fig.width=4>>=
+ercc = data2[grep("^ERCC", rownames(data2)), ]
+dim(ercc)
+errcSF = apply(ercc, 2, median)
+norm.data3 = qsmooth(exprs=t(t(data2)/errcSF), groups=paste0(sex, organ), plot=TRUE)
 @
 
-<<qsmooth14, fig.align='center', fig.height=3, fig.width=4>>=
+<<norm.data14, fig.align='center', fig.height=3.5, fig.width=8, echo=FALSE>>=
 par(mar=c(4, 3, 2, 0.5), mgp=c(1.5, 0.5, 0), cex.axis=0.8, cex.lab=0.8, cex.main=0.8)
+par(mfrow=c(1, 2))  
 
 # boxplot
 boxplot(norm.data3, col=col, main="Qsmooth data", 
         names=sex, ylab="log2(expression)", pch=".", 
         cex.axis=0.8)
 
+# density plot
+plot(0, 0, xlim=c(0, 2.5), ylim=c(0, 1.5), ylab="Density", xlab="log2(expression)",
+     pch="", main="Density estimate")
+legend("topright", col=c("steelblue", "tomato", "seagreen", "orange"), 
+       legend=c("Lung F", "Lung M", "Liver F", "Liver M"), pch=19,
+       cex=0.8)
+for (i in 1:ncol(norm.data3)) {
+  points(density(norm.data3[, i]), type="l", col=col[i])
+}
+
+par(mfrow=c(1, 1))
 @
 
 \section{SessionInfo}
