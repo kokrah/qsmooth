@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{aanes2014normalization}
 H{\aa}vard Aanes, Cecilia Winata, Lars~F Moen, Olga {\O}strup, Sinnakaruppan
@@ -36,6 +36,20 @@ Stephanie~C. Hicks and Rafael~A. Irizarry.
 \newblock When to use quantile normalization?
 \newblock {\em bioRxiv}, 2014.
 \newblock \href {http://dx.doi.org/10.1101/012203} {\path{doi:10.1101/012203}}.
+
+\bibitem{Yu:2014}
+Ying Yu, James~C Fuscoe, Chen Zhao, Chao Guo, Meiwen Jia, Tao Qing, Desmond~I
+  Bannon, Lee Lancashire, Wenjun Bao, Tingting Du, Heng Luo, Zhenqiang Su,
+  Wendell~D Jones, Carrie~L Moland, William~S Branham, Feng Qian, Baitang Ning,
+  Yan Li, Huixiao Hong, Lei Guo, Nan Mei, Tieliu Shi, Kevin~Y Wang, Russell~D
+  Wolfinger, Yuri Nikolsky, Stephen~J Walker, Penelope Duerksen-Hughes,
+  Christopher~E Mason, Weida Tong, Jean Thierry-Mieg, Danielle Thierry-Mieg,
+  Leming Shi, and Charles Wang.
+\newblock A rat rna-seq transcriptomic bodymap across 11 organs and 4
+  developmental stages.
+\newblock {\em Nat Commun}, 5:3230, 2014.
+\newblock \href {http://dx.doi.org/10.1038/ncomms4230}
+  {\path{doi:10.1038/ncomms4230}}.
 
 \bibitem{baker2005external}
 Shawn~C Baker, Steven~R Bauer, Richard~P Beyer, James~D Brenton, Bud Bromley,

@@ -71,13 +71,13 @@ qsmooth = function (exprs, groups, norm.factors=NULL, plot=FALSE, window=0.05) {
       
       sel = sample(1:lq, 10000)
       
-      plot(u[sel], w[sel], pch=".", main="Quantile reference weights",
-           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+      plot(u[sel], w[sel], pch=".", main="qsmooth weights",
+           xlab=" quantiles", ylab="Weight", ylim=c(0, 1))
       
     }else{
       
-      plot(u, w, pch=".", main="Quantile reference weights",
-           xlab="u (normalized gene ranks)", ylab="Weight", ylim=c(0, 1))
+      plot(u, w, pch=".", main="qsmooth weights",
+           xlab="quantiles", ylab="Weight", ylim=c(0, 1))
       
     }
     

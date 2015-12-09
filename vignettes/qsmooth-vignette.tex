@@ -52,9 +52,9 @@
 
 \usepackage{alltt}
 
-\RequirePackage{/Library/Frameworks/R.framework/Versions/3.2/Resources/library/BiocStyle/resources/latex/Bioconductor}
+\RequirePackage{/Library/Frameworks/R.framework/Versions/3.2/Resources/library/BiocStyle/resources/tex/Bioconductor}
 
-\AtBeginDocument{\bibliographystyle{/Library/Frameworks/R.framework/Versions/3.2/Resources/library/BiocStyle/resources/latex/unsrturl}}
+\AtBeginDocument{\bibliographystyle{/Library/Frameworks/R.framework/Versions/3.2/Resources/library/BiocStyle/resources/tex/unsrturl}}
 
 
 \setlength{\parskip}{1\baselineskip}
@@ -76,66 +76,68 @@ Rafael A. Irizarry \texttt{rafa@jimmy.harvard.edu} }
 
 \section{Introduction}
 
-Normalization strategies that are based solely 
-on the observed data without any external information typicallly
-make the assumption that: for each cell or tissue under study 
-only a few genes change expression levels or that an equivalent 
-number of genes increase and decrease across the different biological conditions
+In the analysis of high-throughput gene expression data, 
+normalization strategies based solely on observed data 
+without any external information often make the following assumption: 
+for each sample in the study only a minority of genes are expected to be 
+differentially epxressed or that an equivalent number of genes increase 
+and decrease across the different biological conditions 
 \cite{aanes2014normalization}.
 
-These assumptions can be interpreted in different ways 
+This assumption can be interpreted in different ways 
 leading to different normalization procedures.
-For example, the mean expression level across genes within 
-each sample should be the same across biological conditions 
-\cite{robinson2010scaling}.
-Or that on average the distribution of gene expression within
-each sample should be the same across biological conditions 
-\cite{bolstad2003comparison}. 
-Other normalization methods are based on {\it housekeeping genes}
+For example, in one normalization procedure, the method assumes 
+the mean expression level across genes should be the same across samples 
+\cite{robinson2010scaling}. In contrast, 
+quantile normalization assumes the statistical distribution of gene expression 
+is the same across all samples \cite{bolstad2003comparison}. 
+Other normalization methods based on {\it housekeeping genes} assume genes 
+play a critical role in basic cellular pathways and as such should be 
+expressed all the time at an equal rate independent of samples
 \cite{eisenberg2013human}.
-These are genes that are believed to be play a critical role 
-in basic cellular pathways and as such should be 
-expressed all the time at an equal rate independent of 
-biological conditions.  
-While these assumptions may be reasonable in certain
-experiments, they may not always hold \cite{loven2012revisiting, hicks}.
+While these assumptions may be reasonable in certain experiments, 
+they may not always be appropriate \cite{loven2012revisiting, hicks}.
 For example, mRNA content has been shown to fluctuate significantly 
 during zebrafish early developmental stages \cite{aanes2014normalization}.
-It has also been shown that cells with high levels of c-Myc can amplify their 
-global gene expression two to three times more than their low c-Myc 
-counterparts \cite{loven2012revisiting}.
+Similarily, cells expressing high levels of c-Myc undergo 
+transcriptional amplification causing a 2 to 3 fold change in global 
+gene expression compared to cells expressiong low c-Myc 
+\cite{loven2012revisiting}. In these cases with global changes of 
+gene expression between biological conditions such as in cancer, 
+transcriptional amplification or early developmental stages of zebrafish, 
+quantile normalization is not an appropriate normalization method. In 
+these cases, we can consider a more relaxed assumption about the data, namely
+that the statistical distribution of each sample should be the same 
+within biological conditions or groups (compared to the more stringent 
+assumption of quantile normalization, which states the statistical 
+distribution is the same across all samples).
 
-With the current improvements in technology and 
-reduction in cost we are now able to relax some
-of these assumptions to allow for a more
-nuanced and information retaining normalization 
-techniques.
-In this vignette we introduce,
-smooth quantile normalization (\texttt{\bf{qsmooth}}), 
-a generalization of quantile normalization \cite{bolstad2003comparison}
-that makes the assumption that: all samples within the same biological 
-group should have the same distribution.
+In this vignette we introduce a generalization of quantile normalization, 
+referred to as \textbf{smooth quantile normalization} (\texttt{\bf{qsmooth}}), 
+which is a weighted average of the two types of assumptions about the data. 
+The \texttt{qsmooth} R-package contains the \texttt{qsmooth()} function, 
+which computes a weight at every quantile that compares the variability between
+groups relative to within groups. In one extreme quantile normalization is applied
+and in the other extreme quantile normalization within each biological condition
+is applied. The weight shrinks the group-level quantile normalized data
+towards the overall reference quantiles if variability between groups is sufficiently smaller than
+the variability within groups. 
+The algorithm is described in Figure \ref{algo} below. 
 
-\texttt{\bf{Qsmooth}} first performs quantile normalization within 
-each biological group and then shrinks the group quantiles
-towards the overall reference quantile depending on the variation 
-between the group quantiles and the variation of quantiles 
-within the groups. 
-The algorithm is described in Figure \ref{algo}
-below. Let gene(g) denote the g${}^{th}$ row after sorting each 
-column in the data. 
-For each row, gene(g), we compute the weight $w_{(g)} \in [0, 1]$.
-Where a 0 weight implies quantile normalization within groups and
-a weight of 1 indicates quantile normalization across the groups.
+Let \texttt{gene(g)} denote the ${g}^{th}$ row after sorting each column in the data. 
+For each row, \texttt{gene(g)}, we compute the weight $w_{(g)} \in [0, 1]$, 
+where a weight of 0 implies quantile normalization within groups is applied and
+a weight of 1 indicates quantile normalization is applied.
 The weight at each row depends on the between group sum of squares
 $\hbox{SSB}_{(g)}$ and total sum of squares $\hbox{SST}_{(g)}$, 
 as follows:
 \begin{equation}
 w_{(g)} = \hbox{median} \{1 - \hbox{SSB}_{(i)} / \hbox{SST}_{(i)} | ~i = g-k, \dots, g, \dots, g+k \},
 \end{equation}
-where $k=$ floor(Total number of genes * 0.05). 
-By using the rolling median, we borrow information from neighbouring
-genes.
+where $k=$ floor(Total number of genes * 0.05). The number 0.05 is a flexible 
+parameter that can be altered to change the window of the number of genes 
+considered. In this way, we can use a rolling median to borrow information 
+from neighboring genes in the weight.
 
 \begin{figure}[!h]
 \begin{center}
@@ -147,15 +149,45 @@ genes.
 \label{algo}
 \end{figure}
 
+
+%--------------- Getting Started
+\section{Getting Started}
+
+Load the package in R
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(qsmooth)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+
 %--------------- Rat bodymap
-\section{Rat bodymap}
+\section{Data} 
 
-The \texttt{\bf{bodymapRat}} package contains an ExpressionSet derived from the Raw FASTQ files 
-obtained from Yu et al. (2013). It contains expression levels (RNAseq) on 11 organs, from male and female rats, at 4 developmental stages. We will use a subset of this data in this vignette.
+The \texttt{\bf{bodymapRat}} package contains an \texttt{ExpressionSet} 
+of 652 RNA-Seq samples from a comprehensive rat transcriptomic BodyMap study. 
+This data was derived from the raw FASTQ files obtained from Yu et al. (2013) 
+\cite{Yu:2014}. It contains expression levels from 11 organs in male and female rats
+at 4 developmental stages. We will use a subset of this data in this vignette.
 
-For help with the bodymapRat R-package, there is a vignette available in the /vignettes folder.
+The R-package bodymapRat can be installed from GitHub 
+(\texttt{https://github.com/stephaniehicks/bodymapRat}) using the R package 
+\texttt{\bf{devtools}}.
 
-\subsection{Example 1}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(devtools)}
+\hlkwd{install_github}\hlstd{(}\hlstr{"stephaniehicks/bodymapRat"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{bodymapRat example 1}
 
 The first example is based a dataset
 which contains lung samples from 21 week old male and female rats. 
@@ -181,9 +213,9 @@ Four samples are from males and four samples are from females.
 \end{kframe}
 \end{knitrout}
 
-Below are the boxplots and the density estimate plots
-of the data after after adding 1 and 
-log2 transforming the raw counts (ie. log2(counts+1)).
+Below are the boxplots and the density plots of the data after after adding 1 
+and transforming the raw counts on the \texttt{log2()} scale 
+(i.e. \texttt{log2(counts+1)}).
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -196,16 +228,13 @@ log2 transforming the raw counts (ie. log2(counts+1)).
 
 \end{knitrout}
 
-To run the \texttt{\bf{qsmooth}} algorithm on the log transformed raw counts.
-We must specify sample groups. 
-In this example we will use sex as the grouping factor.
-
-We begin by loading \texttt{\bf{qsmooth}} into R. 
+To run the \texttt{qsmooth()} algorithm on the log transformed raw counts, 
+we must specify the group-level information for each sample. In this example 
+we will use gender as the group-level factor. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{library}\hlstd{(qsmooth)}
 \hlstd{norm.data1} \hlkwb{=} \hlkwd{qsmooth}\hlstd{(}\hlkwc{exprs}\hlstd{=data1,} \hlkwc{groups}\hlstd{=sex,} \hlkwc{plot}\hlstd{=}\hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \end{kframe}
@@ -218,22 +247,21 @@ We begin by loading \texttt{\bf{qsmooth}} into R.
 
 \end{knitrout}
 
-The parameter plot=TRUE indicates that we want to see the 
-weigths of interpolation.
-Weights are computed for each quantile in the data set.
-A weight of 1 indicates full quantile normalization,
+The parameter \texttt{plot=TRUE} indicates that we want to see the weight 
+of interpolation. Weights are computed for each quantile in the data set.
+A weight of 1 indicates quantile normalization is applied,
 where as a weight of 0 indicates quantile normalization
-within the groups. See Figure \ref{algo} for more details on
-the computation of the weights.
+within the groups is applied. See Figure \ref{algo} for more details on 
+the weights.
 
-In this example the weights are mostly close to 1,
-indicating that the is no major difference between the 
-quantiles from the female and male samples.
-Here the \texttt{\bf{qsmooth}} algorithm outputs results
-that is identical (for practical purposes)
-to full quantile normalization. 
+In this example, the weights are close to 1 across all the quantiles 
+indicating that there is no major difference between the group-level quantiles 
+in the female and male rats. Here, the \texttt{qsmooth()} algorithm returns a 
+normalized data set that is nearly identical (for practical purposes)
+to the conventional quantile normalization. 
 
-Below are the boxplots and density plots after normalization.
+Below are the boxplots and density plots after applying the \texttt{qsmooth()} 
+normalization.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
@@ -245,18 +273,17 @@ Below are the boxplots and density plots after normalization.
 
 \end{knitrout}
 
-\subsection{Example 2}
+\subsection{bodymapRat example 2}
 
-The second example is based a dataset
-which contains lung and liver samples from 21 week old male and female rats. 
-Eight samples are from males and eight samples are from females.
+The second example is based a dataset containing lung and liver samples from 
+21 week old male and female rats. Eight samples are males and eight 
+samples are females.
 
 
 
-Let's take a look at the raw data. 
-Below is the boxplot and the density plot
-of the raw counts after after adding 1 followed by a 
-log2 transformation.
+Below are the boxplots and the density plots of the raw data after after adding 1 
+and transforming the raw counts on the \texttt{log2()} scale 
+(i.e. \texttt{log2(counts+1)}).
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -269,9 +296,9 @@ log2 transformation.
 
 \end{knitrout}
 
-We now run the qsmooth algorithm on the log transform raw counts.
-First we must specify sample groups. In this example we specify
-the groupings using sex and organ. 
+To run the \texttt{qsmooth()} algorithm on the log transformed raw counts, 
+we must specify the group-level information for each sample. In this example 
+we will use gender and organ as the group-level factor. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -288,15 +315,14 @@ the groupings using sex and organ.
 
 \end{knitrout}
 
-In this example the weights are mostly below 0.2 before the median 
-(u = 0.5) and increase steadily to 0.8.
-Indicating that there is a difference in the empirical distributions
-of the samples across the groups. In this scenario full quantile
-normalization is not appropriate.
+In this example, the weights are mostly below 0.2 before the median quantile
+(0.5) and increase steadily to 0.8. This indicates there is a difference 
+in the statistical distributions of the samples between the groups. 
+In this case, the conventional quantile normalization is not appropriate. 
 
-Below are the boxplots and density plots after normalization.
-Note that within the liver samples males and females show a difference
-that is not in the lung samples.
+Below are the boxplots and density plots after applying the \texttt{qsmooth()} 
+normalization. Note: within the liver samples males and females show a 
+small difference that is not in the lung samples.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -310,23 +336,25 @@ that is not in the lung samples.
 \end{knitrout}
 
 %------------ qsmooth fucntion
-\section{The qsmooth function}
-The \texttt{qsmooth} function accepts five parameters.
+\section{Additional information for the \texttt{qsmooth()} function}
+The \texttt{qsmooth()} function accepts five parameters.
 \begin{enumerate}
-\item \texttt{exprs}: for counts use log2(raw counts + 1)), for microarray use log2(raw intensities)
+\item \texttt{exprs}: for counts use \texttt{log2(raw counts + 1))}, 
+for microarray use \texttt{log2(raw intensities)}
 \item \texttt{groups}: groups to which samples belong (character vector)
 \item \texttt{norm.factors}: scaling normalization factors ({\bf optional})
-\item \texttt{plot}: plot weights? (default=FALSE) ({\bf optional})
-\item \texttt{plot}: window window size for running median (defined as a fraction of the number of rows of exprs) (default=0.05)
+\item \texttt{plot}: plot weights? (\texttt{default=FALSE}) ({\bf optional})
+\item \texttt{plot}: window window size for running median 
+(defined as a fraction of the number of rows of exprs) (\texttt{default=0.05})
 \end{enumerate}
 The \texttt{qsmooth} function requires an expression matrix and a 
-character vector or factor specifying which group a sample belongs.
-The \texttt{plot} parameter is optional. It specifies whether or
-not the weights should be plotted (See discussion on spike-in below). 
-It is set to FALSE as defualt. 
+character vector or factor specifying the group-level information for that 
+sample. The \texttt{plot} parameter is optional. It specifies whether or
+not the weights should be plotted. It is set to \texttt{FALSE} as default. 
 The \texttt{norm.factors} allows the user to specify a 
 vector of scaling factors that will be used to modify the 
-expression data set prior to applying the qsmooth algorithm.
+expression data set prior to applying the qsmooth algorithm 
+(see discussion on spike-in below).
 
 
 \subsection{External RNA Control Consortium Spike-in Mixes}
@@ -370,6 +398,8 @@ the same distribution
 \end{figure}
 
 \subsection{Pre-specified scaling factors}
+This is an example of incorporating the ERCC spike-ins into \texttt{qsmooth()}
+as pre-specified scaling factors. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -413,22 +443,22 @@ the same distribution
 \hlkwd{sessionInfo}\hlstd{()}
 \end{alltt}
 \begin{verbatim}
-## R version 3.2.1 (2015-06-18)
+## R version 3.2.2 (2015-08-14)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.5 (Yosemite)
+## Running under: OS X 10.11.1 (El Capitan)
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
-## [1] parallel  stats     graphics  grDevices utils     datasets  methods   base     
+## [1] parallel  stats     graphics  grDevices datasets  utils     methods   base     
 ## 
 ## other attached packages:
-## [1] qsmooth_0.0.0.9000  bodymapRat_0.0.1    Biobase_2.28.0      BiocGenerics_0.14.0
+## [1] bodymapRat_0.0.1    Biobase_2.30.0      BiocGenerics_0.16.1 qsmooth_0.0.0.9000 
 ## [5] knitr_1.11         
 ## 
 ## loaded via a namespace (and not attached):
-## [1] BiocStyle_1.6.0 magrittr_1.5    formatR_1.2.1   tools_3.2.1     stringi_1.0-1  
+## [1] BiocStyle_1.8.0 magrittr_1.5    formatR_1.2.1   tools_3.2.2     stringi_1.0-1  
 ## [6] highr_0.5.1     stringr_1.0.0   evaluate_0.8
 \end{verbatim}
 \end{kframe}

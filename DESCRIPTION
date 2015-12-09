@@ -1,14 +1,26 @@
 Package: qsmooth
-Title: What the Package Does (one line, title case)
+Title: Smooth quantile normalization
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph)
+Date: 2015-12-09
+Author: Kwame Okrah, Stephanie Hicks, Hector Corrado Bravo and Rafael Irizarry
+Maintainer: Kwame Okrah <okrah.kwame@gene.com>
+Imports:
+    Biobase,
 Depends:
     R (>= 3.1.2)
-License: What license is it under?
-LazyData: true
 Suggests:
+    bodymapRat,
     knitr,
     BiocStyle
 VignetteBuilder: knitr
+Roxygen: list(wrap = FALSE)
+License: GPL (>=3)
+Description: Smooth quantile normalization 
+    is a generalization of quantile normalization, 
+    which is average of the two types of assumptions
+    about the data generation process: quantile
+    normalization and quantile normalization between
+    groups. 
+biocViews: Normalization, Preprocessing, MultipleComparison,
+    Microarray, Sequencing
 RoxygenNote: 5.0.0
